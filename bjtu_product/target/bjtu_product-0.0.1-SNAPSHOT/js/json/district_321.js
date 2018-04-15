@@ -1,1 +1,0 @@
-[{"DistrictID":"2753","DistrictName":"大武口区","CityID":321},{"DistrictID":"2754","DistrictName":"惠农区","CityID":321},{"DistrictID":"2755","DistrictName":"平罗县","CityID":321}]

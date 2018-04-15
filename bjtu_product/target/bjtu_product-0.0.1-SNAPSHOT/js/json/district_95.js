@@ -1,1 +1,0 @@
-[{"DistrictID":"912","DistrictName":"定海区","CityID":95},{"DistrictID":"913","DistrictName":"普陀区","CityID":95},{"DistrictID":"914","DistrictName":"岱山县","CityID":95},{"DistrictID":"915","DistrictName":"嵊泗县","CityID":95}]

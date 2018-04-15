@@ -1,1 +1,0 @@
-[{"DistrictID":"1611","DistrictName":"曾都区","CityID":180},{"DistrictID":"1612","DistrictName":"广水市","CityID":180}]

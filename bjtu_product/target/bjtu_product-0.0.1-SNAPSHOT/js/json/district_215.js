@@ -1,1 +1,0 @@
-[{"DistrictID":"1855","DistrictName":"湘桥区","CityID":215},{"DistrictID":"1856","DistrictName":"潮安县","CityID":215},{"DistrictID":"1857","DistrictName":"饶平县","CityID":215}]

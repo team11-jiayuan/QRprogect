@@ -1,1 +1,0 @@
-[{"CityID":343,"CityName":"香港特别行政区","ZipCode":"000000","ProvinceID":"32"}]
