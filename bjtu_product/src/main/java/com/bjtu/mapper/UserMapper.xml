@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjtu.mapper.UserMapper">
+
+    
+	<select id="getAllUser" resultType="com.bjtu.entity.U_USER">
+		select * from u_user
+	</select>
+	<!-- 插入用户信息 -->
+	<insert useGeneratedKeys="true" keyColumn="id" keyProperty="id" id="addUser" parameterType="com.bjtu.entity.U_USER">
+		insert into u_user(yh_nch,yh_mm,yh_xm,yh_sfzh,yh_yx,yh_tx,yh_sfzzp,yh_xy)
+		values(#{yh_nch},#{yh_mm},#{yh_xm},#{yh_sfzh},#{yh_yx},#{yh_tx},#{yh_sfzzp},#{yh_xy})
+	</insert>
+	
+	<!-- 插入地址信息 -->
+	<insert id="addAddress" parameterType="Map">
+		insert into u_address(province_id,city_id,district_id,user_id,phone)
+		values(#{address.province_id},#{address.city_id},#{address.district_id},#{user_id},#{address.phone})
+	</insert>
+	
+	<!-- 根据用户名和密码查询用户 -->
+	<select id="getUser" parameterType="com.bjtu.entity.U_USER" resultType="com.bjtu.entity.U_USER">
+	select * from u_user where yh_nch=#{yh_nch} and yh_mm=#{yh_mm}
+	</select>
+	
+	<select id="getUserById" parameterType="Integer" resultType="com.bjtu.entity.U_USER">
+	 select * from u_user where Id=#{id}
+	</select>
+	
+	<!-- 根据用户id查询地址 -->
+	<select id="getAddress" parameterType="Integer" resultType="com.bjtu.entity.U_ADDRESS">
+	select * from u_address where user_id=#{id}
+	</select>
+	
+	<!-- 根据id查询省 -->
+	<select id="getProvince" parameterType="Integer" resultType="com.bjtu.entity.S_PROVINCE">
+	select * from s_province where ProvinceID=#{id}
+	</select>
+	
+	<!-- 根据id查询市 -->
+	<select id="getCity" parameterType="Integer" resultType="com.bjtu.entity.S_CITY">
+	select * from s_city where CityID=#{id}
+	</select>
+	
+	<!-- 根据id查询区 -->
+	<select id="getDistrict" parameterType="Integer" resultType="com.bjtu.entity.S_DISTRICT">
+	select * from s_district where DistrictID=#{id}
+	</select>
+	
+	<!-- 跟新用户信息 -->
+	<update id="updateUser" parameterType="com.bjtu.entity.OBJECT_ADDRESS">
+	update u_user set yh_xm=#{yh_xm},yh_sfzh=#{yh_sfzh},yh_yx=#{yh_yx}
+	where Id=#{user_id}
+	</update>
+	
+	<!-- 跟新地址信息 -->
+	<update id="updateAddress" parameterType="com.bjtu.entity.OBJECT_ADDRESS">
+	update u_address set phone=#{phone} where user_id=#{user_id}
+	</update>
+	
+
+</mapper>
