@@ -1,1 +1,0 @@
-[{"DistrictID":"2626","DistrictName":"金川区","CityID":300},{"DistrictID":"2627","DistrictName":"永昌县","CityID":300}]

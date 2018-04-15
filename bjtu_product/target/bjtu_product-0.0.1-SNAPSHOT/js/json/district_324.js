@@ -1,1 +1,0 @@
-[{"DistrictID":"2765","DistrictName":"沙坡头区","CityID":324},{"DistrictID":"2766","DistrictName":"中宁县","CityID":324},{"DistrictID":"2767","DistrictName":"海原县","CityID":324}]

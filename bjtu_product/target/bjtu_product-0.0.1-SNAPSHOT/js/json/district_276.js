@@ -1,1 +1,0 @@
-[{"DistrictID":"2411","DistrictName":"景洪市","CityID":276},{"DistrictID":"2412","DistrictName":"勐海县","CityID":276},{"DistrictID":"2413","DistrictName":"勐腊县","CityID":276}]

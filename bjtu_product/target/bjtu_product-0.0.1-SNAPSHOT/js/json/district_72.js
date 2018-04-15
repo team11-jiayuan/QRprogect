@@ -1,1 +1,0 @@
-[{"DistrictID":"716","DistrictName":"呼玛县","CityID":72},{"DistrictID":"717","DistrictName":"塔河县","CityID":72},{"DistrictID":"718","DistrictName":"漠河县","CityID":72}]
