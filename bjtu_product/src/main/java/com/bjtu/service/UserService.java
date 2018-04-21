@@ -12,6 +12,7 @@ import com.bjtu.entity.S_PROVINCE;
 import com.bjtu.entity.U_ADDRESS;
 import com.bjtu.entity.U_USER;
 import com.bjtu.mapper.UserMapper;
+import com.bjtu.util.MD5Utils;
 
 @Service
 public class UserService {
@@ -22,8 +23,8 @@ public class UserService {
 	//插入用户和地址信息
 	public void add(U_USER user,U_ADDRESS address){
 		//插入用户，返回user主键
+		user.setYh_mm(MD5Utils.getMD5String(user.getYh_mm()));
 		userMapper.addUser(user);
-		
 		//插入地址信息
 		HashMap<Object, Object> hashMap = new HashMap<Object, Object>();
 		hashMap.put("user_id", user.getId());
@@ -67,6 +68,16 @@ public class UserService {
 	public void updateUser(OBJECT_ADDRESS user){
 		userMapper.updateUser(user);
 		userMapper.updateAddress(user);
+	}
+	
+	//插入用户头像
+	public void uploadHead(int user_id,String image){
+		HashMap<Object, Object> map=new HashMap<Object,Object>();
+		map.put("user_id", user_id);
+		map.put("image", image);
+		
+		userMapper.uploadHead(map);
+			
 	}
 
 }

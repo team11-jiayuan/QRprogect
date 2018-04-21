@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.bjtu.mapper.ProductMapper">
+    
+    <!-- 插入商品 -->
+	<insert useGeneratedKeys="true" keyColumn="Id" keyProperty="Id"
+		id="insert_product" parameterType="com.bjtu.entity.P_PRODUCT">
+		insert into p_product(shp_mch,shp_tp,flbh,yh_id,shp_zt,province_id,city_id,district_id)
+		values(#{shp_mch},#{shp_tp},#{flbh},#{yh_id},#{shp_zt},#{province_id},#{city_id},#{district_id})
+	</insert>
+
+    <!-- 插入商品图片 -->
+	<insert id="insert_image" parameterType="Map">
+		insert into p_image(shp_id,url)
+		values
+		<foreach collection="img_list" item="img" separator=",">
+			(#{shp_id},#{img})
+		</foreach>
+	</insert>
+	
+    <!-- 插入商品信息 -->
+	<insert id="insert_productinf" parameterType="com.bjtu.entity.P_PRODUCTIFO">
+		insert into p_productinf(shp_msh,shp_sh,shp_nx,shp_qzsj,shp_jssj,shp_zj,shp_yj,shp_jyfs,shp_sl,lxfs,shp_id)
+		values(#{shp_msh},#{shp_sh},#{shp_nx},#{shp_qzsj},#{shp_jssj},#{shp_zj},#{shp_yj},#{shp_jyfs},#{shp_sl},#{lxfs},#{shp_id})
+	</insert>
+	
+	<!-- 根据分类编号查询商品 (包括详情)-->
+	<select id="select_product_detail" parameterType="Integer" resultMap="productsMap">
+	  select p.*,pinf.*,image.id as image_id,image.*
+	  from p_product p,p_productinf pinf,p_image image
+	  where p.id=pinf.shp_id and 
+	  p.id=image.shp_id and
+	  pinf.shp_id=#{product_id}
+	</select>
+	
+	<resultMap type="com.bjtu.entity.OBJECT_PRODUCT" id="productsMap" autoMapping="true">
+	   <association property="product"
+			javaType="com.bjtu.entity.P_PRODUCT" autoMapping="true">
+			<result column="shp_id" property="id" />
+		</association>
+		<collection property="images" ofType="com.bjtu.entity.P_IMAGE" autoMapping="true">
+		  <result column="image_id" property="id" />
+		</collection>
+	</resultMap>
+	
+	<!-- 查询商品（包括省市区） -->
+<!-- 	<select id="select_products_province" parameterType="Integer" resultMap="product_province_map">
+	  select product.*,province.*,city.*,district.* 
+	  from p_product product,s_province province s_city city,s_district district
+	  where product.flbh=#{class_id}
+	</select>
+	 -->
+	<!-- 查询商品（啥也不包括） -->
+	<select id="select_products" parameterType="Integer" resultType="com.bjtu.entity.P_PRODUCT">
+	   select * from p_product where flbh=#{class_id}
+	</select>
+	
+	<!-- 查询商品（啥也不包括） -->
+	<select id="select_all_products" resultType="com.bjtu.entity.P_PRODUCT">
+	   select * from p_product
+	</select>
+	
+
+</mapper>

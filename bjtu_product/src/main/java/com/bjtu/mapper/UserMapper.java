@@ -1,6 +1,7 @@
 package com.bjtu.mapper;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.bjtu.entity.OBJECT_ADDRESS;
 import com.bjtu.entity.S_CITY;
@@ -40,5 +41,8 @@ public interface UserMapper {
 	
 	//跟新地址信息
 	public void updateAddress(OBJECT_ADDRESS user);
+	
+	//插入用户头像
+	public void uploadHead(HashMap<Object, Object> map);
 
 }

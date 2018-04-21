@@ -22,9 +22,10 @@
 	
 	<!-- 根据用户名和密码查询用户 -->
 	<select id="getUser" parameterType="com.bjtu.entity.U_USER" resultType="com.bjtu.entity.U_USER">
-	select * from u_user where yh_nch=#{yh_nch} and yh_mm=#{yh_mm}
+	select * from u_user where yh_nch=#{yh_nch}
 	</select>
 	
+	<!-- 根据用户id查询用户 -->
 	<select id="getUserById" parameterType="Integer" resultType="com.bjtu.entity.U_USER">
 	 select * from u_user where Id=#{id}
 	</select>
@@ -58,6 +59,11 @@
 	<!-- 跟新地址信息 -->
 	<update id="updateAddress" parameterType="com.bjtu.entity.OBJECT_ADDRESS">
 	update u_address set phone=#{phone} where user_id=#{user_id}
+	</update>
+	
+	<!--插入用户头像  -->
+	<update id="uploadHead" parameterType="Map">
+	  update u_user set yh_tx=#{image} where id=#{user_id}
 	</update>
 	
 
