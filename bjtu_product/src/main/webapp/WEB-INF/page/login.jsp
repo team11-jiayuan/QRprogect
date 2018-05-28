@@ -46,8 +46,8 @@
 					<div class="span6">
 						<div class="span6">
 							<div style="float: left; width: 1250px; height: 500px;">
-							   <img src="image/background.jpg"
-								class="img-rounded" style="width: 1250px; height: 500px" />							  
+							   <!-- <img src="image/background.jpg"
+								class="img-rounded" style="width: 1250px; height: 500px" /> -->							  
 						    </div>
 						</div>
 					</div>
@@ -74,7 +74,7 @@
 									<label class="control-label" for="input01">密码</label>
 									<div class="controls">
 										<input name="yh_mm" type="password" placeholder="" class="input-xlarge">
-										<p class="help-block"></p>
+										<p class="help-block"><a>忘记密码?</a></p>
 									</div>
 								</div>
 

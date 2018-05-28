@@ -205,7 +205,7 @@
 					enctype="multipart/form-data" method="post">
 					<fieldset>
 						<c:if test="${user.yh_tx==null}">
-							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img id="img_m" alt="140x140" src="image/head.jpg"
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<img id="img_m" alt="140x140" src="image/head.jpg"
 								class="img-circle" onclick="image_click()"
 								style="vertical-align: middle; cursor: pointer; width: 80px; height: 80px" />
 						</c:if>
