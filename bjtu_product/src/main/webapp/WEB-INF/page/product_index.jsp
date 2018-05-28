@@ -163,7 +163,9 @@
 									<div class="accordion-inner">
 										<a href=userManage.do>基本资料</a>
 									</div>
-									<div class="accordion-inner">我的闲置</div>
+									<div class="accordion-inner">
+										<a href="MyProductManager.do">我的闲置</a>
+									</div>
 									<div class="accordion-inner">我的订单</div>
 								</div>
 							</div>

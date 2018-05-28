@@ -101,46 +101,28 @@
 				
 			</div>
 			<div class="row-fluid">
-				<div class="span6">
+				<div class="span2">
 					<ul class="nav nav-list">
-						<li class="nav-header">
-							列表标题
-						</li>
+						
 						<li class="active">
-							<a href="#">首页</a>
+							<a href="MyProductManager.do">我的闲置</a>
 						</li>
 						<li>
-							<a href="#">库</a>
+							<a href="p_publish.do">发布闲置</a>
 						</li>
-						<li>
-							<a href="#">应用</a>
-						</li>
-						<li class="nav-header">
-							功能列表
-						</li>
-						<li>
-							<a href="#">资料</a>
-						</li>
-						<li>
-							<a href="#">设置</a>
-						</li>
-						<li class="divider">
-						</li>
-						<li>
-							<a href="#">帮助</a>
-						</li>
+						
 					</ul>
 				</div>
-				<div class="span6">
+				<div class="span10">
 					<ul class="breadcrumb">
 						<li>
-							<a href="#">主页</a> <span class="divider">/</span>
+							<a href="#">尚未出租</a> <span class="divider">/</span>
 						</li>
 						<li>
-							<a href="#">类目</a> <span class="divider">/</span>
+							<a href="#">正在出租</a> <span class="divider">/</span>
 						</li>
 						<li class="active">
-							主题
+							<a href="#">出租记录</a>
 						</li>
 					</ul>
 					<div class="row-fluid">
