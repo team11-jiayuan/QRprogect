@@ -23,6 +23,35 @@
 	href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css"
 	rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+	function getBefore() {
+		$.ajax({
+			url : "getBefore.do",
+			type : "post",
+			success : function(data) {
+				$("#order_product").html(data);
+			}
+		});
+	}
+	function getCurrent() {
+		$.ajax({
+			url : "getCurrent.do",
+			type : "post",
+			success : function(data) {
+				$("#order_product").html(data);
+			}
+		});
+	}
+	function getRecord() {
+		$.ajax({
+			url : "getRecord.do",
+			type : "post",
+			success : function(data) {
+				$("#order_product").html(data);
+			}
+		});
+	}
+</script>
 <body>
 <div class="container-fluid">
 	<div class="row-fluid">
@@ -116,17 +145,21 @@
 				<div class="span10">
 					<ul class="breadcrumb">
 						<li>
-							<a href="#">尚未出租</a> <span class="divider">/</span>
+							<a href="javascript:void(0)" onclick="getBefore()">尚未出租</a> <span class="divider">/</span>
 						</li>
 						<li>
-							<a href="#">正在出租</a> <span class="divider">/</span>
+							<a href="javascript:void(0)" onclick="getCurrent()">正在出租</a> <span class="divider">/</span>
 						</li>
 						<li class="active">
-							<a href="#">出租记录</a>
+							<a href="javascript:void(0)" onclick="getRecord()">出租记录</a>
 						</li>
 					</ul>
+					<!-- 订单列表 -->
 					<div class="row-fluid">
 						<div class="span12">
+							<div id="order_product">
+								<jsp:include page="order_product.jsp"></jsp:include>
+							</div>
 						</div>
 					</div>
 				</div>
