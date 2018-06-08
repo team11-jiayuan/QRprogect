@@ -76,13 +76,14 @@
 							<dd>￥&nbsp &nbsp${object_product.shp_yj }</dd>
 							<dt>租赁时间</dt>
 							<dd>
-								<form>
+								<form action="toRent.do" method="post">
 									<fieldset>
 										<div class="control-group">
 
 											<label class="control-label" for="input01"></label>
 											<div class="controls">
-												<input type="text" placeholder="输入数字" class="input-xlarge">
+												<input name="product_id" type="hidden" value="${object_product.id }">
+												<input name="days" type="text" placeholder="输入租赁天数" class="input-xlarge">
 												<!-- <p class="help-block"></p> -->
 											</div>
 										</div>
@@ -90,7 +91,8 @@
 											<!-- <label class="control-label"></label> -->
 
 											<div class="controls">
-												<button class="btn btn-success">确认租赁</button>
+												<!-- <button class="btn btn-success">确认租赁</button> -->
+												<input type="submit" value="确认租赁" />
 											</div>
 										</div>
 									</fieldset>

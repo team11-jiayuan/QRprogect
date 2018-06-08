@@ -63,5 +63,10 @@
 	   select * from p_product
 	</select>
 	
+	<!-- 根据id查询 -->
+	<select id="selectProductById" resultType="com.bjtu.entity.P_PRODUCT">
+		select * from p_product where Id = #{product_id }
+	</select>
+	
 
 </mapper>

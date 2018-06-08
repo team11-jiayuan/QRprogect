@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjtu.mapper.ProductInfMapper">
+	
+	<select id="selectProductInfById" resultType="com.bjtu.entity.P_PRODUCTIFO">
+		select * from p_productinf where shp_id = #{product_id }
+	</select>
+	
+</mapper>

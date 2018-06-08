@@ -84,4 +84,22 @@ public class RentController {
 		model.addAttribute("orderList", orderList);
 		return "order_product";
 	}
+	
+	/**
+	 * 确认租赁
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("toRent")
+	public String toRent(HttpSession session, Model model, Integer product_id, Integer days) {
+		//判断用户是否登录
+		U_USER user = (U_USER) session.getAttribute("user");
+		if (user == null) {
+			return "login";
+		} else {
+			orderService.rent(user.getId(), product_id, days);
+			return "rentSuccess";
+		}
+	}
 }

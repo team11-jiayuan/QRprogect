@@ -8,4 +8,11 @@
 		select * from `order` where user_id = #{userId} and order_zt = #{order_zt}
 	</select>
 	
+	<insert id="insertOrder" parameterType="com.bjtu.entity.Order" useGeneratedKeys="true" keyColumn="Id" keyProperty="Id">
+		<!-- insert into p_product(shp_mch,shp_tp,flbh,yh_id,shp_zt,province_id,city_id,district_id)
+		values(#{shp_mch},#{shp_tp},#{flbh},#{yh_id},#{shp_zt},#{province_id},#{city_id},#{district_id}) -->
+		insert into `order`(id,customer_id,shp_id,order_zj,order_yj,order_hj,order_kssj,order_jssj,order_day,order_num,order_zt,user_id,shp_mch,shp_tp) 
+		values(#{id},#{customer_id},#{shp_id},#{order_zj},#{order_yj},#{order_hj},#{order_kssj},#{order_jssj},#{order_day},#{order_num},#{order_zt},#{user_id},#{shp_mch},#{shp_tp})
+	</insert>
+	
 </mapper>

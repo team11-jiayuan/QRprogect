@@ -3,6 +3,8 @@ package com.bjtu.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.bjtu.entity.OBJECT_PRODUCT;
 import com.bjtu.entity.P_IMAGE;
 import com.bjtu.entity.P_PRODUCT;
@@ -28,6 +30,8 @@ public interface ProductMapper {
 	//查询所有商品
 	public List<P_PRODUCT> select_all_products();
 	
+	//根据id查询商品
+	public P_PRODUCT selectProductById(@Param("product_id")int product_id);
 	
 
 }
