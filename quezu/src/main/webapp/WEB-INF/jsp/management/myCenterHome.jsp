@@ -26,11 +26,6 @@
 			.default_cursor{
 				cursor: default
 			}
-			a#account_link{
-				color: #ed2441;
-				font-size: 16px;
-				text-decoration: none;
-			}
 			span.mybtn{
 				display: block;
 				float:left;
@@ -45,21 +40,12 @@
 			function userName_onclick(){
 				window.parent.document.getElementById("link1").click();
 			}
-			function account_onclick(){
-				window.parent.document.getElementById("link2").click();
-			}
 			$(document).ready(function(){
 				$("#alterInformation").mouseover(function(){
 					$("#alterInformation").css("background-color", "RGB(70,180,250)");
 				});
 				$("#alterInformation").mouseout(function(){
 					$("#alterInformation").css("background-color", "RGB(53,155,220)");
-				});
-				$("#addMoney").mouseover(function(){
-					$("#addMoney").css("background-color", "RGB(70,180,250)");
-				});
-				$("#addMoney").mouseout(function(){
-					$("#addMoney").css("background-color", "RGB(53,155,220)");
 				});
 			});
 		</script>
@@ -71,9 +57,9 @@
 					<h4 class="default_cursor">个人信息</h4>
 				</div>
 			</div>
-			<div class="row" style="margin-bottom: 20px">
+			<div class="row" style="margin-bottom: 20px; margin-top: 5px;">
 				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding-left: 30px;">
-					<img class="img-responsive" width="80px" src="img/${sessionScope.currentUser.photograph }">
+					<img class="img-responsive" width="75px" src="img/${sessionScope.currentUser.photograph }">
 				</div>
 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 					<div class="row" style="margin-bottom: 10px;">
@@ -87,13 +73,12 @@
 						<div style="clear: both;"></div>
 					</div>
 					<div class="row">
-						<div style="float:left">
-							<span class="default_cursor" style="color: #666; font-size: 16px;">账户余额：</span>
-							<a id="account_link" href="javascript:void(0)" onclick="account_onclick()">￥0.00</a>
+						<div style="float: left">
+							<img width="12px" src="img/phone.png">
 						</div>
-						<a href="javascript:void(0)">
-							<span id="addMoney" class="mybtn" style="margin-left: 20px;">充值</span>
-						</a>
+						<div style="float: left; margin-left: 5px;">
+							<span style="color: #888; font-size: 16px;">${sessionScope.currentUser.phoneNumber }</span>
+						</div>
 						<div style="clear: both;"></div>
 					</div>
 				</div>

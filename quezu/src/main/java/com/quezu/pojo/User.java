@@ -10,10 +10,10 @@ public class User extends BasePojo {
 	private Integer id;
 	//用户名
 	private String userName;
-	//性别
-	private String sex;
 	//密码
 	private String password;
+	//性别
+	private String sex;
 	//头像
 	private String photograph;
 	//真实姓名
@@ -24,6 +24,12 @@ public class User extends BasePojo {
 	private String email;
 	//手机号码
 	private String phoneNumber;
+	//省
+	private String provinceID;
+	//市
+	private String cityID;
+	//区
+	private String districtID;
 	
 	public Integer getId() {
 		return id;
@@ -79,8 +85,22 @@ public class User extends BasePojo {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getProvinceID() {
+		return provinceID;
 	}
-	
+	public void setProvinceID(String provinceID) {
+		this.provinceID = provinceID;
+	}
+	public String getCityID() {
+		return cityID;
+	}
+	public void setCityID(String cityID) {
+		this.cityID = cityID;
+	}
+	public String getDistrictID() {
+		return districtID;
+	}
+	public void setDistrictID(String districtID) {
+		this.districtID = districtID;
+	}
 }

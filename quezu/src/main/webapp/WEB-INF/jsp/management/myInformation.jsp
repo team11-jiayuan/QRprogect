@@ -17,7 +17,7 @@
 		<style type="text/css">
 			span.nav{
 				display: block;
-				font-size: 15px;
+				font-size: 18px;
 				padding-bottom: 2px;
 			}
 			.nav_border{
@@ -99,7 +99,7 @@
 				</div>
 			</div>
 			<div class="row" style="height: 15px; background-color: RGB(245,245,245)"></div>
-			<div class="row" style="padding: 20px;">
+			<div class="row" style="padding: 30px 0px 10px 30px;">
 				<div style="float:left; margin-right: 40px;">
 					<a id="link1" class="nav visited" href="basicInformation" target="innerContent"><span id="span1" class="nav visited">基本信息</span></a>
 				</div>
@@ -108,7 +108,7 @@
 				</div>
 				<div style="clear: both;"></div>
 			</div>
-			<div  class="row" style="padding: 30px 5px;">
+			<div  class="row" style="padding: 20px 5px;">
 				<iframe id="innerIframe" class="myiframe" src="basicInformation" name="innerContent" width="100%" onload="changeFrameHeight()"></iframe>
 			</div>
 		</div>

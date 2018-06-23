@@ -241,7 +241,7 @@ public class PageController {
 	 * @return
 	 */
 	@RequestMapping("basicInformation")
-	public String toBasicInformation() {
+	public String toBasicInformation(HttpSession session, ModelMap model) {
 		return "management/basicInformation";
 	}
 }

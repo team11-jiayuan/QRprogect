@@ -2,35 +2,85 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.quezu.mapper.UserMapper" >
 	<resultMap id="BaseResultMap" type="User" >
-		<id column="id" property="id" jdbcType="INTEGER" />
+		<id column="u_id" property="id" jdbcType="INTEGER" />
 		<result column="u_userName" property="userName" jdbcType="VARCHAR" />
-		<result column="u_sex" property="sex" jdbcType="VARCHAR" />
 		<result column="u_password" property="password" jdbcType="VARCHAR" />
+		<result column="u_sex" property="sex" jdbcType="VARCHAR" />
 		<result column="u_photograph" property="photograph" jdbcType="VARCHAR" />
 		<result column="u_realName" property="realName" jdbcType="VARCHAR" />
 		<result column="u_IDNumber" property="IDNumber" jdbcType="VARCHAR" />
 		<result column="u_email" property="email" jdbcType="VARCHAR" />
 		<result column="u_phoneNumber" property="phoneNumber" jdbcType="VARCHAR" />
+		<result column="u_provinceID" property="provinceID" jdbcType="VARCHAR" />
+		<result column="u_cityID" property="cityID" jdbcType="VARCHAR" />
+		<result column="u_districtID" property="districtID" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<sql id="Base_Column_List" >
-		id, u_userName, u_sex, u_password, u_photograph, u_realName, u_IDNumber, u_email, u_phoneNumber
+		u_id, u_userName, u_password, u_sex, u_photograph, u_realName, u_IDNumber, u_email, u_phoneNumber, u_provinceID, u_cityID, u_districtID
 	</sql>
 	
 	<!-- 插入用户数据 -->
 	<insert id="insert" parameterType="User">
-		insert into u_user 
-			(id, u_userName, u_sex, u_password, u_photograph, u_realName, u_IDNumber, u_email, u_phoneNumber) 
+		insert into tab_user 
+			(u_id, u_userName, u_password, u_sex, u_photograph, u_realName, u_IDNumber, u_email, u_phoneNumber, u_provinceID, u_cityID, u_districtID) 
 		values 
-			(#{id}, #{userName}, #{sex}, #{password}, #{photograph}, #{realName}, #{IDNumber}, #{email}, #{phoneNumber})
+			(#{id}, #{userName}, #{password}, #{sex}, #{photograph}, #{realName}, #{IDNumber}, #{email}, #{phoneNumber}, #{provinceID}, #{cityID}, #{districtID})
 	</insert>
 	
 	<!-- 根据用户名查找用户 -->
 	<select id="selectUserByUsername" parameterType="String" resultMap="BaseResultMap">
-		select 
-			<include refid="Base_Column_List" />
-		from u_user
+		select <include refid="Base_Column_List" />
+		from tab_user
 		where u_userName = #{userName}
 	</select>
+	
+	<!-- 根据ID查找用户 -->
+	<select id="selectUserById" parameterType="Integer" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" />
+		from tab_user
+		where u_id = #{id}
+	</select>
+	
+	<!-- 根据ID更新用户 -->
+	<update id="updateUserById" parameterType="User">
+		update tab_user 
+		<set>
+			<if test="userName != null" >
+				u_userName = #{userName},
+			</if>
+			<if test="password != null" >
+				u_password = #{password},
+			</if>
+			<if test="sex != null" >
+				u_sex = #{sex},
+			</if>
+			<if test="photograph != null" >
+				u_photograph = #{photograph},
+			</if>
+			<if test="realName != null" >
+				u_realName = #{realName},
+			</if>
+			<if test="IDNumber != null" >
+				u_IDNumber = #{IDNumber},
+			</if>
+			<if test="email != null" >
+				u_email = #{email},
+			</if>
+			<if test="phoneNumber != null" >
+				u_phoneNumber = #{phoneNumber},
+			</if>
+			<if test="provinceID != null" >
+				u_provinceID = #{provinceID},
+			</if>
+			<if test="cityID != null" >
+				u_cityID = #{cityID},
+			</if>
+			<if test="districtID != null" >
+				u_districtID = #{districtID},
+			</if>
+		</set>
+		where u_id = #{id}
+	</update>
 	
 </mapper>

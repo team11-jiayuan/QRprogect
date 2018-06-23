@@ -7,7 +7,7 @@ import com.quezu.mapper.UserMapper;
 import com.quezu.pojo.User;
 import com.quezu.util.MD5Utils;
 
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
@@ -37,6 +37,28 @@ public class UserServiceImpl implements UserService {
 	public User selectUserByUsername(String userName) {
 		User user = userMapper.selectUserByUsername(userName);
 		return user;
+	}
+	
+	/**
+	 * 根据ID查找用户
+	 */
+	@Override
+	public User selectUserById(Integer id) {
+		User user = userMapper.selectUserById(id);
+		return user;
+	}
+
+	/**
+	 * 根据ID更新用户
+	 */
+	@Override
+	public Boolean updateUserById(User user) {
+		int result = userMapper.updateUserById(user);
+		if(result == 1) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 }

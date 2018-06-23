@@ -18,4 +18,18 @@ public interface UserService {
 	 */
 	public User selectUserByUsername(String userName);
 	
+	/**
+	 * 根据ID查找用户
+	 * @param id
+	 * @return
+	 */
+	public User selectUserById(Integer id);
+	
+	/**
+	 * 根据ID更新用户
+	 * @param user
+	 * @return
+	 */
+	public Boolean updateUserById(User user);
+	
 }

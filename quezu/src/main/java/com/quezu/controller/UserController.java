@@ -101,6 +101,23 @@ public class UserController {
 		return "redirect:index";
 	}
 	
-	
+	/**
+	 * 更新用户信息
+	 * @param user
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("updateUser")
+	public String updateUser(User user, HttpSession session) {
+		user.setId(((User)session.getAttribute("currentUser")).getId());
+		Boolean result = userService.updateUserById(user);
+		if(result == true) {
+			User updatedUser = userService.selectUserById(user.getId());
+			session.setAttribute("currentUser", updatedUser);
+			return "management/basicInformation";
+		}else {
+			return "redirect:serverException";
+		}
+	}
 	
 }

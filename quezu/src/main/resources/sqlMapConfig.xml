@@ -8,11 +8,11 @@
 	</typeAliases>
 	
 	<!-- 配置PageHelper分页插件 -->
-	<plugins>
+<!-- 	<plugins>
 		<plugin interceptor="com.github.pagehelper.PageHelper">
-			<!-- 设置数据库类型 -->
+			设置数据库类型
 			<property name="dialect" value="mysql"></property>
 		</plugin>
-	</plugins>
+	</plugins> -->
 	
 </configuration>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.quezu.mapper.ProductMapper" >
+	<resultMap id="BaseResultMap" type="Product" >
+		<id column="p_id" property="id" jdbcType="INTEGER" />
+		<result column="u_id" property="userId" jdbcType="INTEGER" />
+		<result column="p_name" property="productName" jdbcType="VARCHAR" />
+		<result column="p_description" property="description" jdbcType="VARCHAR" />
+		<result column="p_primary_img" property="primaryImg" jdbcType="VARCHAR" />
+		<result column="p_amount" property="amount" jdbcType="INTEGER" />
+		<result column="p_category" property="category" jdbcType="VARCHAR" />
+		<result column="p_sub_category" property="subCategory" jdbcType="VARCHAR" />
+		<result column="p_provinceID" property="provinceID" jdbcType="VARCHAR" />
+		<result column="p_cityID" property="cityID" jdbcType="VARCHAR" />
+		<result column="p_districtID" property="districtID" jdbcType="VARCHAR" />
+		<result column="p_mode" property="mode" jdbcType="VARCHAR" />
+		<result column="p_deposit" property="deposit" jdbcType="DECIMAL" />
+		<result column="p_rent" property="rent" jdbcType="DECIMAL" />
+		<result column="p_publish_time" property="publishTime" jdbcType="DATE" />
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+		p_id, u_id, p_name, p_description, p_primary_img, p_amount, p_category, p_sub_category, p_provinceID, p_cityID, p_districtID, p_mode, p_deposit, p_rent, p_publish_time
+	</sql>
+	
+	<!-- 插入物品信息 -->
+	<insert id="insertProduct" parameterType="Product">
+		insert into tab_product 
+			(p_id, u_id, p_name, p_description, p_primary_img, p_amount, p_category, p_sub_category, p_provinceID, p_cityID, p_districtID, p_mode, p_deposit, p_rent, p_publish_time) 
+		values 
+			(#{id}, #{userId}, #{productName}, #{description}, #{primaryImg}, #{amount}, #{category}, #{subCategory}, #{provinceID}, #{cityID}, #{districtID}, #{mode}, #{deposit}, #{rent}, #{publishTime})
+	</insert>
+	
+	<!-- 根据物品ID查找物品 -->
+	<select id="selectProductById" parameterType="Integer" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" />
+		from tab_product 
+		where p_id = #{id}
+	</select>
+	
+</mapper>
