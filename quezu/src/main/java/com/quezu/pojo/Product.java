@@ -10,7 +10,7 @@ public class Product extends BasePojo {
 	private static final long serialVersionUID = 1L;
 	
 	//物品id
-	private Integer id;
+	private String id;
 	//物主id
 	private Integer userId;
 	//物品名称
@@ -19,8 +19,6 @@ public class Product extends BasePojo {
 	private String description;
 	//首选图片
 	private String primaryImg;
-	//物品数量
-	private Integer amount;
 	//物品分类
 	private String category;
 	//物品子类
@@ -32,7 +30,7 @@ public class Product extends BasePojo {
 	//所在区
 	private String districtID;
 	//租赁方式
-	private String mode;
+	private String rentMode;
 	//押金
 	private BigDecimal deposit;
 	//租金
@@ -40,10 +38,10 @@ public class Product extends BasePojo {
 	//发布时间
 	private Date publishTime;
 	
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public Integer getUserId() {
@@ -69,12 +67,6 @@ public class Product extends BasePojo {
 	}
 	public void setPrimaryImg(String primaryImg) {
 		this.primaryImg = primaryImg;
-	}
-	public Integer getAmount() {
-		return amount;
-	}
-	public void setAmount(Integer amount) {
-		this.amount = amount;
 	}
 	public String getCategory() {
 		return category;
@@ -106,11 +98,11 @@ public class Product extends BasePojo {
 	public void setDistrictID(String districtID) {
 		this.districtID = districtID;
 	}
-	public String getMode() {
-		return mode;
+	public String getRentMode() {
+		return rentMode;
 	}
-	public void setMode(String mode) {
-		this.mode = mode;
+	public void setRentMode(String rentMode) {
+		this.rentMode = rentMode;
 	}
 	public BigDecimal getDeposit() {
 		return deposit;

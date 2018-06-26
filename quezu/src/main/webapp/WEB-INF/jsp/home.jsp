@@ -16,13 +16,13 @@
 		<title>个人中心</title>
 		<style type="text/css">
 			/**“个人中心首页”链接默认样式**/
-			a#index{
+			a.link_01{
 				text-decoration: none;
 				color: #666;
 				font-size: 16px;
 			}
 			/**“个人中心首页”链接鼠标移入时样式**/
-			a#index:hover{
+			a.link_01:hover{
 				color: #0282d3;
 			}
 			/**导航栏样式**/
@@ -140,10 +140,10 @@
 				</div>
 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-8 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0" style="padding-top: 2.2%">
 					<div style="float: left;">
-						<a href="myHome" id="index">个人中心首页</a>
+						<a href="myHome" class="link_01">个人中心首页</a>
 					</div>
 					<div style="float: left; margin-left: 5%;">
-						<a href="javascript:void(0)" id="index">发布闲置物品</a>
+						<a href="publish" class="link_01">发布闲置物品</a>
 					</div>
 					<div  style="clear: both;"></div>
 				</div>
@@ -167,7 +167,7 @@
 								</span>
 							</c:otherwise>
 						</c:choose>
-						<c:choose>
+						<%-- <c:choose>
 							<c:when test="${toPage=='account' }">
 								<span id="nav_link2" class="navigation visited">
 									<a href="myAccount" id="link2" class="nav_link visited">我的账户</a>
@@ -178,8 +178,8 @@
 									<a href="myAccount" id="link2" class="nav_link">我的账户</a>
 								</span>
 							</c:otherwise>
-						</c:choose>
-						<c:choose>
+						</c:choose> --%>
+						<%-- <c:choose>
 							<c:when test="${toPage=='address' }">
 								<span id="nav_link3" class="navigation visited">
 									<a href="addressManagement" id="link3" class="nav_link visited">地址管理</a>
@@ -190,7 +190,7 @@
 									<a href="addressManagement" id="link3" class="nav_link">地址管理</a>
 								</span>
 							</c:otherwise>
-						</c:choose>
+						</c:choose> --%>
 					</div>
 					<!-- 分隔线 -->
 					<div class="separator"></div>

@@ -7,7 +7,7 @@ import com.quezu.mapper.UserMapper;
 import com.quezu.pojo.User;
 import com.quezu.util.MD5Utils;
 
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
 	
 	@Autowired

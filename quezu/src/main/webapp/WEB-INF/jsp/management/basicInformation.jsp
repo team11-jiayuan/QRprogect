@@ -38,7 +38,7 @@
 					});
 				});
 				//如果省ID不为空，加载市
-				if(provinceID != "null"){
+				if(provinceID != "null" && provinceID != ""){
 					$.getJSON("js/json/city_"+provinceID+".js", function(data){
 						$(data).each(function(i, json){
 							if(cityID == json.CityID){
@@ -50,7 +50,7 @@
 					});
 				}
 				//如果市ID不为空，加载区
-				if(cityID != "null"){
+				if(cityID != "null" && cityID != ""){
 					$.getJSON("js/json/district_"+cityID+".js", function(data){
 						$(data).each(function(i, json){
 							if(districtID == json.DistrictID){

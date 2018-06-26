@@ -3,7 +3,7 @@
 <mapper namespace="com.quezu.mapper.ImageMapper" >
 	<resultMap id="BaseResultMap" type="Image" >
 		<id column="i_id" property="id" jdbcType="INTEGER" />
-		<result column="p_id" property="productId" jdbcType="INTEGER" />
+		<result column="p_id" property="productId" jdbcType="VARCHAR" />
 		<result column="i_url" property="url" jdbcType="VARCHAR" />
 	</resultMap>
 	
@@ -11,7 +11,7 @@
 		i_id, p_id, i_url
 	</sql>
 	
-	<!-- 插入图片 -->
+	<!-- 插入物品图片 -->
 	<insert id="insertImage" parameterType="Image">
 		insert into tab_image 
 			(i_id, p_id, i_url) 

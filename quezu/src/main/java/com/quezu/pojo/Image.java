@@ -9,7 +9,7 @@ public class Image extends BasePojo {
 	//图片id
 	private Integer id;
 	//物品id
-	private Integer productId;
+	private String productId;
 	//图片url
 	private String url;
 	
@@ -19,10 +19,10 @@ public class Image extends BasePojo {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getProductId() {
+	public String getProductId() {
 		return productId;
 	}
-	public void setProductId(Integer productId) {
+	public void setProductId(String productId) {
 		this.productId = productId;
 	}
 	public String getUrl() {

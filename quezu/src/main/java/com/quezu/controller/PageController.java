@@ -65,6 +65,32 @@ public class PageController {
 	}
 	
 	/**
+	 * 发布物品
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("publish")
+	public String toPublicProduct(HttpSession session, ModelMap model) {
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			model.addAttribute("toPage", "toPublish");
+			return "home";
+		}else {
+			return "login";
+		}
+	}
+	
+	/**
+	 * iframe发布物品
+	 * @return
+	 */
+	@RequestMapping("toPublish")
+	public String toPublicProduct() {
+		return "product/publishProduct";
+	}
+	
+	/**
 	 * 个人信息
 	 * @return
 	 */
@@ -207,7 +233,7 @@ public class PageController {
 	 */
 	@RequestMapping("rentOut")
 	public String toMyRentOut() {
-		return "management/myRentOut";
+		return "order/rentoutOrder/myRentOut";
 	}
 	
 	/**

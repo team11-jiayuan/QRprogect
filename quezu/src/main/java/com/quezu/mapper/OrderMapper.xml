@@ -2,30 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.quezu.mapper.OrderMapper" >
 	<resultMap id="BaseResultMap" type="Order" >
-		<id column="o_id" property="id" jdbcType="INTEGER" />
-		<result column="p_id" property="productId" jdbcType="INTEGER" />
+		<id column="o_id" property="id" jdbcType="VARCHAR" />
+		<result column="p_id" property="productId" jdbcType="VARCHAR" />
 		<result column="u_owner_id" property="ownerId" jdbcType="INTEGER" />
 		<result column="u_renter_id" property="renterId" jdbcType="INTEGER" />
 		<result column="o_status" property="status" jdbcType="VARCHAR" />
-		<result column="o_days" property="days" jdbcType="INTEGER" />
-		<result column="o_months" property="months" jdbcType="INTEGER" />
+		<result column="o_days_or_months" property="daysOrMonths" jdbcType="INTEGER" />
 		<result column="o_startTime" property="startTime" jdbcType="DATE" />
 		<result column="o_stopTime" property="stopTime" jdbcType="DATE" />
 		<result column="o_total" property="total" jdbcType="DECIMAL" />
 		<result column="o_update_Time" property="updateTime" jdbcType="TIMESTAMP" />
 	</resultMap>
+	<resultMap id="extendedResultMap" extends="BaseResultMap" type="Order" >
+		<result column="p_name" property="extMap.productName" jdbcType="VARCHAR" />
+		<result column="p_primary_img" property="extMap.primaryImg" jdbcType="VARCHAR" />
+		<result column="p_rent_mode" property="extMap.rentMode" jdbcType="VARCHAR" />
+		<result column="p_deposit" property="extMap.deposit" jdbcType="DECIMAL" />
+		<result column="p_rent" property="extMap.rent" jdbcType="DECIMAL" />
+		<result column="p_publish_time" property="extMap.publishTime" jdbcType="TIMESTAMP" />
+		<result column="u_userName" property="extMap.renterName" jdbcType="VARCHAR" />
+	</resultMap>
 	
 	<sql id="Base_Column_List" >
-		o_id, p_id, u_owner_id, u_renter_id, o_status, o_days, o_months, o_startTime, o_stopTime, o_total, o_update_Time
+		o_id, p_id, u_owner_id, u_renter_id, o_status, o_days_or_months, o_startTime, o_stopTime, o_total, o_update_Time
 	</sql>
 	
 	<!-- 插入订单 -->
 	<insert id="insertOrder" parameterType="Order">
 		insert into tab_order 
-			(o_id, p_id, u_owner_id, u_renter_id, o_status, o_days, o_months, o_startTime, o_stopTime, o_total, o_update_Time) 
+			(o_id, p_id, u_owner_id, u_renter_id, o_status, o_days_or_months, o_startTime, o_stopTime, o_total, o_update_Time) 
 		values 
-			(#{id}, #{productId}, #{ownerId}, #{renterId}, #{status}, #{days}, #{months}, #{startTime}, #{stopTime}, #{total}, #{updateTime})
+			(#{id}, #{productId}, #{ownerId}, #{renterId}, #{status}, #{daysOrMonths}, #{startTime}, #{stopTime}, #{total}, #{updateTime})
 	</insert>
+	
+	<!-- 根据物主id和订单状态查询订单 -->
+	<select id="selectOrderByUserIdAndOrderStatus" parameterType="map" resultMap="extendedResultMap">
+		SELECT 
+			o.o_id, o.p_id, o.u_owner_id, o.u_renter_id, o.o_status, o.o_days_or_months, o.o_startTime, o.o_stopTime, o.o_total, o.o_update_Time, 
+			p.p_name, p.p_primary_img, p.p_rent_mode, p.p_deposit, p.p_rent, p.p_publish_time, u.u_userName 
+		FROM 
+			tab_order AS o 
+		LEFT JOIN 
+			tab_product AS p ON o.p_id=p.p_id 
+		LEFT JOIN 
+			tab_user AS u ON o.u_renter_id=u.u_id
+		WHERE
+			o.u_owner_id=#{userId} 
+			and o.o_status in 
+			<foreach collection="orderStatus" item="sta" separator="," open="(" close=")">
+				#{sta}
+			</foreach>
+	</select>
 	
 	<!-- 根据订单ID查找订单 -->
 	<select id="selectOrderById" parameterType="Integer" resultMap="BaseResultMap">

@@ -9,19 +9,17 @@ public class Order extends BasePojo {
 
 	private static final long serialVersionUID = 1L;
 	//订单id
-	private Integer id;
+	private String id;
 	//物品id
-	private Integer productId;
+	private String productId;
 	//物主id
 	private Integer ownerId;
 	//承租人id
 	private Integer renterId;
 	//订单状态
 	private String status;
-	//租用天数
-	private Integer days;
-	//租用月数
-	private Integer months;
+	//租用时长(天/月)
+	private Integer daysOrMonths;
 	//起租日期
 	private Date startTime;
 	//结束日期
@@ -31,16 +29,16 @@ public class Order extends BasePojo {
 	//订单最后更新时间
 	private Date updateTime;
 	
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public Integer getProductId() {
+	public String getProductId() {
 		return productId;
 	}
-	public void setProductId(Integer productId) {
+	public void setProductId(String productId) {
 		this.productId = productId;
 	}
 	public Integer getOwnerId() {
@@ -61,17 +59,12 @@ public class Order extends BasePojo {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Integer getDays() {
-		return days;
+	
+	public Integer getDaysOrMonths() {
+		return daysOrMonths;
 	}
-	public void setDays(Integer days) {
-		this.days = days;
-	}
-	public Integer getMonths() {
-		return months;
-	}
-	public void setMonths(Integer months) {
-		this.months = months;
+	public void setDaysOrMonths(Integer daysOrMonths) {
+		this.daysOrMonths = daysOrMonths;
 	}
 	public Date getStartTime() {
 		return startTime;
