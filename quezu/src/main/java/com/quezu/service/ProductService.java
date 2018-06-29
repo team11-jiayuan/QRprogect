@@ -10,5 +10,12 @@ public interface ProductService {
 	 * @return
 	 */
 	public int insertProduct(Product product);
+
+	/**
+	 * 根据物品id查询物品
+	 * @param productId
+	 * @return
+	 */
+	public Product selectProductByProductId(String productId);
 	
 }

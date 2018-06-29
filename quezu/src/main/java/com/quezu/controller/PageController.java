@@ -1,22 +1,51 @@
 package com.quezu.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.quezu.pojo.Order;
 import com.quezu.pojo.User;
+import com.quezu.service.OrderService;
 
 @Controller
 public class PageController {
+	
+	@Autowired
+	private OrderService orderService;
 	
 	/**
 	 * 首页
 	 * @return
 	 */
 	@RequestMapping(value = { "/", "index" })
-	public String showIndex() {
+	public String showIndex(ModelMap model) {
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		List<String> orderStatus = new ArrayList<String>();
+		orderStatus.add("1");
+		orderStatus.add("2");
+		orderStatus.add("3");
+		orderStatus.add("4");
+		orderStatus.add("5");
+		orderStatus.add("6");
+		orderStatus.add("7");
+		orderStatus.add("8");
+		orderStatus.add("9");
+		paramsMap.put("orderStatus", orderStatus);
+		paramsMap.put("limit", 4);
+		for(int i=1; i<7; i++) {
+			paramsMap.put("productCategory", ""+i);
+			List<Order> orderList = orderService.selectOrderByUserIdAndOrderStatus(paramsMap);
+			model.addAttribute("orderList"+i, orderList);
+		}
 		return "index";
 	}
 	
@@ -98,7 +127,7 @@ public class PageController {
 	public String toMyInformation(HttpSession session, ModelMap model) {
 		User user = (User)session.getAttribute("currentUser");
 		if(user != null) {
-			model.addAttribute("toPage", "information");
+			model.addAttribute("toPage", "basicInformation");
 			return "home";
 		}else {
 			return "login";
@@ -109,9 +138,9 @@ public class PageController {
 	 * iframe个人信息
 	 * @return
 	 */
-	@RequestMapping("information")
+	@RequestMapping("basicInformation")
 	public String toMyInformation() {
-		return "management/myInformation";
+		return "management/basicInformation";
 	}
 	
 	/**
@@ -208,8 +237,9 @@ public class PageController {
 	 * @return
 	 */
 	@RequestMapping("rent")
-	public String toMyRent() {
-		return "management/myRent";
+	public String toMyRent(ModelMap model) {
+		model.addAttribute("toPage", "toMyCurrentRent");
+		return "order/myRentOrder/myRent";
 	}
 	
 	/**
@@ -232,7 +262,8 @@ public class PageController {
 	 * @return
 	 */
 	@RequestMapping("rentOut")
-	public String toMyRentOut() {
+	public String toMyRentOut(ModelMap model) {
+		model.addAttribute("toPage", "toReadyForRent");
 		return "order/rentoutOrder/myRentOut";
 	}
 	
@@ -262,12 +293,4 @@ public class PageController {
 		return "management/myFocus";
 	}
 	
-	/**
-	 * 基本信息
-	 * @return
-	 */
-	@RequestMapping("basicInformation")
-	public String toBasicInformation(HttpSession session, ModelMap model) {
-		return "management/basicInformation";
-	}
 }

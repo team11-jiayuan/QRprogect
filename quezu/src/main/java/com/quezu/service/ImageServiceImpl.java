@@ -27,4 +27,15 @@ public class ImageServiceImpl implements ImageService {
 		}
 	}
 
+	/**
+	 * 根据物品id查询物品图片
+	 */
+	@Override
+	public List<Image> selectImagesByProductId(String productId) {
+		List<Image> imageList = imageMapper.selectImagesByProductId(productId);
+		return imageList;
+	}
+
+	
+
 }

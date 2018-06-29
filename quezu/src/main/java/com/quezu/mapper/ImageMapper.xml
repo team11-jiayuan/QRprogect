@@ -19,8 +19,8 @@
 			(#{id}, #{productId}, #{url})
 	</insert>
 	
-	<!-- 根据物品ID查找图片 -->
-	<select id="selectImageByProductId" parameterType="Integer" resultMap="BaseResultMap">
+	<!-- 根据物品id查询物品图片片 -->
+	<select id="selectImagesByProductId" parameterType="String" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List" />
 		from tab_image 
 		where p_id = #{productId}

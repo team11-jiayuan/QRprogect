@@ -46,19 +46,67 @@
 			tab_product AS p ON o.p_id=p.p_id 
 		LEFT JOIN 
 			tab_user AS u ON o.u_renter_id=u.u_id
-		WHERE
-			o.u_owner_id=#{userId} 
-			and o.o_status in 
-			<foreach collection="orderStatus" item="sta" separator="," open="(" close=")">
-				#{sta}
-			</foreach>
+		<where>
+			<if test="userId != null">
+				o.u_owner_id=#{userId} 
+			</if>
+			<if test="orderStatus != null">
+				and o.o_status in 
+				<foreach collection="orderStatus" item="sta" separator="," open="(" close=")">
+					#{sta}
+				</foreach>
+			</if>
+			<if test="productCategory != null">
+				and p.p_category = #{productCategory}
+			</if>
+		</where>
+		ORDER BY 
+			o_update_Time DESC
+		<if test="limit != null">
+			LIMIT #{limit}
+		</if>
 	</select>
 	
+	<!-- 根据订单id修改订单信息 -->
+	<update id="updateOrderById" parameterType="Order">
+		update tab_order 
+		<set>
+			<if test="productId != null" >
+				p_id = #{productId},
+			</if>
+			<if test="ownerId != null" >
+				u_owner_id = #{ownerId},
+			</if>
+			<if test="renterId != null" >
+				u_renter_id = #{renterId},
+			</if>
+			<if test="status != null" >
+				o_status = #{status},
+			</if>
+			<if test="daysOrMonths != null" >
+				o_days_or_months = #{daysOrMonths},
+			</if>
+			<if test="startTime != null" >
+				o_startTime = #{startTime},
+			</if>
+			<if test="stopTime != null" >
+				o_stopTime = #{stopTime},
+			</if>
+			<if test="total != null" >
+				o_total = #{total},
+			</if>
+			<if test="updateTime != null" >
+				o_update_Time = #{updateTime},
+			</if>
+		</set>
+		where o_id = #{id}
+	</update>
+	
 	<!-- 根据订单ID查找订单 -->
-	<select id="selectOrderById" parameterType="Integer" resultMap="BaseResultMap">
+	<select id="selectOrderByOrderId" parameterType="String" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List" />
 		from tab_order 
-		where o_id = #{id}
+		where o_id = #{orderId}
 	</select>
 	
 </mapper>

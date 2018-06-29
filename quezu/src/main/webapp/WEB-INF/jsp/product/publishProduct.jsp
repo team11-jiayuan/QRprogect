@@ -154,7 +154,7 @@
 			<div class="row" style="height: 15px; background-color: RGB(245,245,245)"></div>
 			<div class="row" style="padding: 30px 30px;">
 				<!-- 表单区域 -->
-				<form class="form-horizontal" action="publishProduct" method="post" enctype="multipart/form-data">
+				<form action="publishProduct" method="post" enctype="multipart/form-data">
 					<div style="width: 50%; float: left;">
 						<div class="myRow">
 							<div style="width: 25%; float: left;">
@@ -271,17 +271,17 @@
 						</div>
 						<div style="width: 25%; float: left; padding-right: 3%">
 							<select class="form-control" name="cityID" id="cityID">
-								<option value="aa">请选择</option>
+								<option value="">请选择</option>
 							</select>
 						</div>
 						<div style="width: 25%; float: left; padding-right: 3%">
 							<select class="form-control" name="districtID" id="districtID">
-								<option value="dd">请选择</option>
+								<option value="">请选择</option>
 							</select>
 						</div>
 						<div class="clearFloat"></div>
 					</div>
-					<div class="myRow" style="text-align: center; margin-top: 30px;">
+					<div class="myRow" style="text-align: center; margin-top: 25px;">
 						<input type="submit" class="btn btn-primary" style="width: 35%;" value="立 即 发 布" />
 					</div>
 				</form>

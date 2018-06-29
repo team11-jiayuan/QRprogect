@@ -66,51 +66,6 @@
 				$("#link3").mouseout(function(){
 					$("#span3").removeClass("nav_border");
 				});
-				/**导航栏鼠标点击后样式**/
-				$("#link1").click(function(){
-					//移除已访问的超链接样式
-					$("#link2").removeClass("visited");
-					$("#link3").removeClass("visited");
-					//移除已访问的超链接边框样式
-					$("#span2").removeClass("nav_border");
-					$("#span2").removeClass("visited");
-					$("#span3").removeClass("nav_border");
-					$("#span3").removeClass("visited");
-					//添加超链接已访问的边框样式
-					$("#link1").addClass("visited");
-					//添加超链接已访问样式
-					$("#span1").addClass("visited");
-				});
-				/**导航栏鼠标点击后样式**/
-				$("#link2").click(function(){
-					//移除已访问的超链接样式
-					$("#link1").removeClass("visited");
-					$("#link3").removeClass("visited");
-					//移除已访问的超链接边框样式
-					$("#span1").removeClass("nav_border");
-					$("#span1").removeClass("visited");
-					$("#span3").removeClass("nav_border");
-					$("#span3").removeClass("visited");
-					//添加超链接已访问的边框样式
-					$("#link2").addClass("visited");
-					//添加超链接已访问样式
-					$("#span2").addClass("visited");
-				});
-				/**导航栏鼠标点击后样式**/
-				$("#link3").click(function(){
-					//移除已访问的超链接样式
-					$("#link1").removeClass("visited");
-					$("#link2").removeClass("visited");
-					//移除已访问的超链接边框样式
-					$("#span1").removeClass("nav_border");
-					$("#span1").removeClass("visited");
-					$("#span2").removeClass("nav_border");
-					$("#span2").removeClass("visited");
-					//添加超链接已访问的边框样式
-					$("#link3").addClass("visited");
-					//添加超链接已访问样式
-					$("#span3").addClass("visited");
-				});
 			});
 			/**iframe高度自适应**/
 			function changeFrameHeight(){
@@ -127,20 +82,47 @@
 				</div>
 			</div>
 			<div class="row" style="height: 15px; background-color: RGB(245,245,245)"></div>
-			<div class="row" style="padding: 30px 0px 10px 30px;">
-				<div style="float:left; margin-right: 40px;">
-					<a id="link1" class="nav visited" href="readyForRent" target="innerContent"><span id="span1" class="nav visited">待出租</span></a>
-				</div>
-				<div style="float:left; margin-right: 40px;">
-					<a id="link2" class="nav" href="javascript:void(0)"><span id="span2" class="nav">正在出租</span></a>
-				</div>
-				<div style="float:left; margin-right: 40px;">
-					<a id="link3" class="nav" href="javascript:void(0)"><span id="span3" class="nav">历史记录</span></a>
-				</div>
+			<div class="row" style="padding: 30px 30px;">
+				<c:choose>
+					<c:when test="${toPage=='toReadyForRent' }">
+						<div style="float:left; margin-right: 40px;">
+							<a id="link1" class="nav visited" href="readyForRent"><span id="span1" class="nav visited">待出租</span></a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="float:left; margin-right: 40px;">
+							<a id="link1" class="nav" href="readyForRent"><span id="span1" class="nav">待出租</span></a>
+						</div>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${toPage=='toCurrentRent' }">
+						<div style="float:left; margin-right: 40px;">
+							<a id="link2" class="nav visited" href="currentRent"><span id="span2" class="nav visited">正在出租</span></a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="float:left; margin-right: 40px;">
+							<a id="link2" class="nav" href="currentRent"><span id="span2" class="nav">正在出租</span></a>
+						</div>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${toPage=='toHistoricRecord' }">
+						<div style="float:left; margin-right: 40px;">
+							<a id="link3" class="nav visited" href="historicRecord"><span id="span3" class="nav visited">历史记录</span></a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="float:left; margin-right: 40px;">
+							<a id="link3" class="nav" href="historicRecord"><span id="span3" class="nav">历史记录</span></a>
+						</div>
+					</c:otherwise>
+				</c:choose>
 				<div style="clear: both;"></div>
 			</div>
-			<div  class="row" style="padding: 20px 30px;">
-				<iframe id="innerIframe" class="myiframe" src="readyForRent" name="innerContent" width="100%" onload="changeFrameHeight()"></iframe>
+			<div  class="row" style="padding: 0px 30px; margin-bottom: 30px;">
+				<iframe id="innerIframe" class="myiframe" src="${toPage }" scrolling="no" name="innerContent" width="100%" onload="changeFrameHeight()"></iframe>
 			</div>
 		</div>
 	</body>

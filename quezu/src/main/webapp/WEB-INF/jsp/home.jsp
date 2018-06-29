@@ -156,7 +156,7 @@
 					<div class="navigation">
 						<span class="navigation" style="cursor: default">账户信息</span>
 						<c:choose>
-							<c:when test="${toPage=='information' }">
+							<c:when test="${toPage=='basicInformation' }">
 								<span id="nav_link1" class="navigation visited">
 									<a href="myInformation" id="link1" class="nav_link visited">个人信息</a>
 								</span>
@@ -236,7 +236,7 @@
 				</div>
 				<!-- iframe -->
 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-					<iframe id="iframe" class="myiframe" src="${toPage }" name="content" onload="changeFrameHeight()" width="100%"></iframe>
+					<iframe id="iframe" class="myiframe" src="${toPage }" scrolling="no" name="content" onload="changeFrameHeight()" width="100%"></iframe>
 				</div>
 			</div>
 		</div>

@@ -13,15 +13,11 @@
 		<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 		<script src="js/jquery-3.3.1.min.js"></script>
 		<script src="js/bootstrap.js"></script>
-		<title>我的租赁</title>
+		<title>Insert title here</title>
 	</head>
 	<body>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<h1>我的租赁</h1>
-				</div>
-			</div>
+		<div class="container" style="padding: 0px;">
+			正在出租
 		</div>
 	</body>
 </html>

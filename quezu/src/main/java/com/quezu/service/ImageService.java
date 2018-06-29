@@ -2,6 +2,8 @@ package com.quezu.service;
 
 import java.util.List;
 
+import com.quezu.pojo.Image;
+
 public interface ImageService {
 	
 	/**
@@ -10,5 +12,12 @@ public interface ImageService {
 	 * @return
 	 */
 	public void insertImages(List<String> imageList, String productId);
+
+	/**
+	 * 根据物品id查询物品图片
+	 * @param productId 
+	 * @return
+	 */
+	public List<Image> selectImagesByProductId(String productId);
 	
 }

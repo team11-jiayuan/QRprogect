@@ -41,5 +41,40 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> orderList = orderMapper.selectOrderByUserIdAndOrderStatus(paramsMap);
 		return orderList;
 	}
+
+	/**
+	 * 根据id取消订单
+	 */
+	@Override
+	public int cancelOrderById(String orderId) {
+		Order order = new Order();
+		order.setId(orderId);
+		order.setStatus("0");
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 根据订单编号查询订单
+	 */
+	@Override
+	public Order selectOrderByOrderId(String orderId) {
+		Order order =orderMapper.selectOrderByOrderId(orderId);
+		return order;
+	}
+
+	/**
+	 * 申请租赁
+	 */
+	@Override
+	public int applyRent(Order order) {
+		order.setStatus("2");
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	
 	
 }

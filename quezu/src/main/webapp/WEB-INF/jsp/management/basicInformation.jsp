@@ -16,9 +16,18 @@
 		<script src="js/bootstrap.js"></script>
 		<title>基本信息</title>
 		<style type="text/css">
-			label.control-label{
-				font-weight: normal;
-				padding-right: 0px;
+			span.baseLabel{
+				display: block;
+				text-align: right;
+				padding-top: 7px;
+				cursor: default;
+			}
+			div.clearFloat{
+				clear: both;
+			}
+			div.myRow{
+				width: 100%;
+				margin-bottom: 20px;
 			}
 		</style>
 		<script type="text/javascript">
@@ -86,29 +95,51 @@
 					});
 				});
 			});
+			//点击上传头像按钮
+			function image_click() {
+				$("#file").click();
+			}
+			function image_show() {
+				var file = $("#file");
+				var url = window.URL.createObjectURL(file[0].files[0]);
+				$("#img").attr("src", url);
+			}
 		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					<!-- 表单区域 -->
-					<form class="form-horizontal" action="updateUser" method="post">
-						<div class="form-group">
-							<label for="userName" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">用户名：</label>
-							<div class="col-sm-9">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4" style="padding: 15px; text-align: center">
+					<span style="font-size: 22px; cursor: default;">个人信息</span>
+				</div>
+			</div>
+			<div class="row" style="height: 15px; background-color: RGB(245,245,245)"></div>
+			<div class="row" style="padding: 30px 30px;">
+				<form action="updateUser" method="post" enctype="multipart/form-data">
+					<div style="width: 50%; float: left;">
+						<div class="myRow">
+							<div style="width: 25%; float: left;">
+								<span class="baseLabel">用户名：</span>
+							</div>
+							<div style="width: 75%; float: left;">
 								<input type="text" class="form-control" id="userName" name="userName" value="${sessionScope.currentUser.userName }" disabled>
 							</div>
+							<div class="clearFloat"></div>
 						</div>
-						<div class="form-group">
-							<label for="realName" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">真实姓名：</label>
-							<div class="col-sm-9">
+						<div class="myRow">
+							<div style="width: 25%; float: left;">
+								<span class="baseLabel">真实姓名：</span>
+							</div>
+							<div style="width: 75%; float: left;">
 								<input type="text" class="form-control" id="realName" name="realName" value="${sessionScope.currentUser.realName }">
 							</div>
+							<div class="clearFloat"></div>
 						</div>
-						<div class="form-group">
-							<label for="sex" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">性别：</label>
-							<div class="col-sm-9">
+						<div class="myRow">
+							<div style="width: 25%; float: left;">
+								<span class="baseLabel" style="padding-top: 0px;">性别：</span>
+							</div>
+							<div style="width: 75%; float: left;">
 								<c:choose>
 									<c:when test="${sessionScope.currentUser.sex=='female' }">
 										<label class="radio-inline">
@@ -128,57 +159,80 @@
 									</c:otherwise>
 								</c:choose>
 							</div>
+							<div class="clearFloat"></div>
 						</div>
-						<div class="form-group">
-							<label for="IDNumber" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">身份证号：</label>
-							<div class="col-sm-9">
+						<div class="myRow">
+							<div style="width: 25%; float: left;">
+								<span class="baseLabel">身份证号：</span>
+							</div>
+							<div style="width: 75%; float: left;">
 								<input type="text" class="form-control" id="IDNumber" name="IDNumber" value="${sessionScope.currentUser.IDNumber }">
 							</div>
+							<div class="clearFloat"></div>
 						</div>
-						<div class="form-group">
-							<label for="phoneNumber" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">手机号：</label>
-							<div class="col-sm-9">
+						<div class="myRow">
+							<div style="width: 25%; float: left;">
+								<span class="baseLabel">手机号：</span>
+							</div>
+							<div style="width: 75%; float: left;">
 								<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="${sessionScope.currentUser.phoneNumber }">
 							</div>
+							<div class="clearFloat"></div>
 						</div>
-						<div class="form-group">
-							<label for="email" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">邮箱：</label>
-							<div class="col-sm-9">
+						<div class="myRow">
+							<div style="width: 25%; float: left;">
+								<span class="baseLabel">邮箱：</span>
+							</div>
+							<div style="width: 75%; float: left;">
 								<input type="text" class="form-control" id="email" name="email" value="${sessionScope.currentUser.email }">
 							</div>
+							<div class="clearFloat"></div>
 						</div>
-						<div class="form-group">
-							<label for="provinceID" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">所在省：</label>
-							<div class="col-sm-9">
-								<select class="form-control" name="provinceID" id="provinceID">
-									<option value="">请选择</option>
-								</select>
+					</div>
+					<!-- 上传图片区域 -->
+					<div style="padding-left:36px; width: 50%; height: 310px; float: left; text-align: center;">
+						<span style="font-size: 18px; color: #333; display: block; margin-bottom: 15px; cursor: default;">头像照片</span>
+						<div style="width: 362px; text-align: center;">
+							<div id="upload1">
+								<c:choose>
+									<c:when test="${sessionScope.currentUser.photograph=='photograph.png' }">
+										<img id="img" onclick="image_click()" src="img/photograph.png" style="cursor:pointer; width: 110px; height: 110px; border-radius:110px;">
+									</c:when>
+									<c:otherwise>
+										<img id="img" onclick="image_click()" src="/pic/${sessionScope.currentUser.photograph }" style="cursor:pointer; width: 110px; height: 110px; border-radius:110px;">
+									</c:otherwise>
+								</c:choose>
+								<input id="file" onChange="image_show()" type="file" name="files" style="display: none;"/>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="cityID" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">所在市：</label>
-							<div class="col-sm-9">
-								<select class="form-control" name="cityID" id="cityID">
-									<option value="">请选择</option>
-								</select>
-							</div>
+					</div>
+					<div class="clearFloat"></div>
+					<!-- 地址 -->
+					<div class="myRow">
+						<div style="width: 12.5%; float: left;">
+							<span class="baseLabel">所在地区：</span>
 						</div>
-						<div class="form-group">
-							<label for="districtID" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">所在区：</label>
-							<div class="col-sm-9">
-								<select class="form-control" name="districtID" id="districtID">
-									<option value="">请选择</option>
-								</select>
-							</div>
+						<div style="width: 25%; float: left; padding-right: 3%">
+							<select class="form-control" name="provinceID" id="provinceID">
+								<option value="">请选择</option>
+							</select>
 						</div>
-						<div class="form-group">
-							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label"></label>
-							<div class="col-sm-9">
-								<input type="submit" class="btn btn-primary" style="width: 100%;" value="提 交" />
-							</div>
+						<div style="width: 25%; float: left; padding-right: 3%">
+							<select class="form-control" name="cityID" id="cityID">
+								<option value="aa">请选择</option>
+							</select>
 						</div>
-					</form>
-				</div>
+						<div style="width: 25%; float: left; padding-right: 3%">
+							<select class="form-control" name="districtID" id="districtID">
+								<option value="dd">请选择</option>
+							</select>
+						</div>
+						<div class="clearFloat"></div>
+					</div>
+					<div class="myRow" style="text-align: center; margin-top: 25px;">
+						<input type="submit" class="btn btn-primary" style="width: 35%;" value="提交" />
+					</div>
+				</form>
 			</div>
 		</div>
 	</body>

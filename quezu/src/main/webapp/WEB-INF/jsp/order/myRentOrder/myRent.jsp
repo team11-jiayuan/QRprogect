@@ -13,8 +13,9 @@
 		<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 		<script src="js/jquery-3.3.1.min.js"></script>
 		<script src="js/bootstrap.js"></script>
-		<title>个人信息</title>
+		<title>我的出租</title>
 		<style type="text/css">
+			/**导航栏样式**/
 			span.nav{
 				display: block;
 				font-size: 18px;
@@ -59,30 +60,6 @@
 				$("#link2").mouseout(function(){
 					$("#span2").removeClass("nav_border");
 				});
-				/**导航栏鼠标点击后样式**/
-				$("#link1").click(function(){
-					//移除已访问的超链接样式
-					$("#link2").removeClass("visited");
-					//移除已访问的超链接边框样式
-					$("#span2").removeClass("nav_border");
-					$("#span2").removeClass("visited");
-					//添加超链接已访问的边框样式
-					$("#link1").addClass("visited");
-					//添加超链接已访问样式
-					$("#span1").addClass("visited");
-				});
-				/**导航栏鼠标点击后样式**/
-				$("#link2").click(function(){
-					//移除已访问的超链接样式
-					$("#link1").removeClass("visited");
-					//移除已访问的超链接边框样式
-					$("#span1").removeClass("nav_border");
-					$("#span1").removeClass("visited");
-					//添加超链接已访问的边框样式
-					$("#link2").addClass("visited");
-					//添加超链接已访问样式
-					$("#span2").addClass("visited");
-				});
 			});
 			/**iframe高度自适应**/
 			function changeFrameHeight(){
@@ -95,21 +72,39 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4" style="padding: 15px; text-align: center">
-					<span style="font-size: 22px; cursor: default;">个人信息</span>
+					<span style="font-size: 22px; cursor: default;">我的租赁</span>
 				</div>
 			</div>
 			<div class="row" style="height: 15px; background-color: RGB(245,245,245)"></div>
-			<div class="row" style="padding: 30px 0px 10px 30px;">
-				<div style="float:left; margin-right: 40px;">
-					<a id="link1" class="nav visited" href="basicInformation" target="innerContent"><span id="span1" class="nav visited">基本信息</span></a>
-				</div>
-				<div style="float:left;">
-					<a id="link2" class="nav" href="javascript:void(0)"><span id="span2" class="nav">头像信息</span></a>
-				</div>
+			<div class="row" style="padding: 30px 30px;">
+				<c:choose>
+					<c:when test="${toPage=='toMyCurrentRent' }">
+						<div style="float:left; margin-right: 40px;">
+							<a id="link1" class="nav visited" href="myCurrentRent"><span id="span1" class="nav visited">正在出租</span></a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="float:left; margin-right: 40px;">
+							<a id="link1" class="nav" href="myCurrentRent"><span id="span1" class="nav">正在出租</span></a>
+						</div>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${toPage=='toRentHistory' }">
+						<div style="float:left; margin-right: 40px;">
+							<a id="link2" class="nav visited" href="rentHistory"><span id="span2" class="nav visited">历史记录</span></a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="float:left; margin-right: 40px;">
+							<a id="link2" class="nav" href="rentHistory"><span id="span2" class="nav">历史记录</span></a>
+						</div>
+					</c:otherwise>
+				</c:choose>
 				<div style="clear: both;"></div>
 			</div>
-			<div  class="row" style="padding: 20px 5px;">
-				<iframe id="innerIframe" class="myiframe" src="basicInformation" name="innerContent" width="100%" onload="changeFrameHeight()"></iframe>
+			<div  class="row" style="padding: 0px 30px; margin-bottom: 30px;">
+				<iframe id="innerIframe" class="myiframe" src="${toPage }" scrolling="no" name="innerContent" width="100%" onload="changeFrameHeight()"></iframe>
 			</div>
 		</div>
 	</body>

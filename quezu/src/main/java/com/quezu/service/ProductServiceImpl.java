@@ -21,4 +21,13 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
+	/**
+	 * 根据物品id查询物品
+	 */
+	@Override
+	public Product selectProductByProductId(String productId) {
+		Product product = productMapper.selectProductByProductId(productId);
+		return product;
+	}
+
 }

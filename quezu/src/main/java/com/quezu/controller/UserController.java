@@ -1,6 +1,7 @@
 package com.quezu.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -9,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.quezu.pojo.User;
 import com.quezu.service.UserService;
+import com.quezu.util.FileUploadUtil;
 import com.quezu.util.MD5Utils;
 
 @Controller
@@ -108,7 +112,12 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("updateUser")
-	public String updateUser(User user, HttpSession session) {
+	public String updateUser(User user, HttpSession session,  @RequestParam("files") MultipartFile[] files) {
+		//将头像照片存到本地文件系统，并获得图片文件名List
+		List<String> imageList = FileUploadUtil.imageHandler(files);
+		if(imageList.size() != 0) {
+			user.setPhotograph(imageList.get(0));
+		}
 		user.setId(((User)session.getAttribute("currentUser")).getId());
 		Boolean result = userService.updateUserById(user);
 		if(result == true) {

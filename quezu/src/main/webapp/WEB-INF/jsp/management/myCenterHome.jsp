@@ -59,7 +59,14 @@
 			</div>
 			<div class="row" style="margin-bottom: 20px; margin-top: 5px;">
 				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding-left: 30px;">
-					<img class="img-responsive" width="75px" src="img/${sessionScope.currentUser.photograph }">
+					<c:choose>
+						<c:when test="${sessionScope.currentUser.photograph=='photograph.png' }">
+							<img src="img/photograph.png" style="width: 75px; height: 75px; border-radius:110px;">
+						</c:when>
+						<c:otherwise>
+							<img src="/pic/${sessionScope.currentUser.photograph }" style="width: 75px; height: 75px; border-radius:110px;">
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 					<div class="row" style="margin-bottom: 10px;">

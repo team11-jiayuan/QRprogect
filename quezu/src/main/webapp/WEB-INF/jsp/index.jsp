@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
 %>
@@ -24,6 +25,10 @@
 			}
 			a.menu:hover {
 				background-color: RGB(28,155,236);
+			}
+			a.productLink{
+				text-decoration: none;
+				color: #333;
 			}
 		</style>
 		<script type="text/javascript">
@@ -93,6 +98,20 @@
 					$("#navigation6").css("background-color", "RGB(255,255,255)");
 				});
 			});
+			function imouserover(element){
+				element.style.border="RGB(200,200,200) 1px solid";
+				element.style.backgroundColor="RGB(252,252,252)";
+			}
+			function imouserout(element){
+				element.style.border="#f5f5f5 1px solid";
+				element.style.backgroundColor="RGB(255,255,255)";
+			}
+			function productLinkMouseover(element){
+				element.style.color="#0282d3";
+			}
+			function productLinkMouseout(element){
+				element.style.color="#333";
+			}
 		</script>
 	</head>
 	<body>
@@ -136,7 +155,7 @@
 			</div>
 		</div>
 		<!-- 导航栏和轮播图 -->
-		<div class="container-fluid" style="margin-bottom: 400px;">
+		<div class="container-fluid">
 			<div class="row">
 				<!-- 导航栏 -->
 				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="border-left: #0172ba 1px solid; border-bottom: #0172ba 1px solid; padding: 0px; width: 12%;">
@@ -218,6 +237,274 @@
 							<span class="sr-only">Next</span>
 						</a>
 					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 手机数码 -->
+		<div class="container-fluid" style="margin-top: 20px;">
+			<div class="row">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<span style="display: block; border-left: #0172ba 2px solid; padding-left: 10px; font-size: 18px;">手机数码</span>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<div style="border-bottom: #e0e0e0 2px solid; width: 102%;"></div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 10px 0px; width: 68%;">
+					<c:forEach items="${orderList1}" var="order">
+						<div onmouseover="imouserover(this)" onmouseout="imouserout(this)" style="width: 25%; height: 257px; border: #f5f5f5 1px solid; float: left; text-align: center; padding: 0px 28px; border-radius: 3px;">
+							<a href="productDetail/${order.id}">
+								<img src="/pic/${order.extMap.primaryImg }" style="width: 200px; height: 200px; border: 1px solid rgb(238, 238, 238);">
+							</a>
+							<div style="float: left; color: #e4393c; padding: 5px 0px 2px 0px;">
+								￥${order.extMap.rent } /
+								<c:choose>
+									<c:when test="${order.extMap.rentMode=='daily' }">
+										天
+									</c:when>
+									<c:otherwise>
+										月
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div style="clear: both;"></div>
+							<div style="float: left;">
+								<a class="productLink" onmouseover="productLinkMouseover(this)" onmouseout="productLinkMouseout(this)" href="productDetail/${order.id}">
+									${fn:substring(order.extMap.productName,0,14)}
+								</a>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+					</c:forEach>
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 电脑办公 -->
+		<div class="container-fluid" style="margin-top: 20px;">
+			<div class="row">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<span style="display: block; border-left: #0172ba 2px solid; padding-left: 10px; font-size: 18px;">电脑办公</span>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<div style="border-bottom: #e0e0e0 2px solid; width: 102%;"></div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 10px 0px; width: 68%;">
+					<c:forEach items="${orderList2}" var="order">
+						<div onmouseover="imouserover(this)" onmouseout="imouserout(this)" style="width: 25%; height: 257px; border: #f5f5f5 1px solid; float: left; text-align: center; padding: 0px 28px; border-radius: 3px;">
+							<a href="productDetail/${order.id}">
+								<img src="/pic/${order.extMap.primaryImg }" style="width: 200px; height: 200px; border: 1px solid rgb(238, 238, 238);">
+							</a>
+							<div style="float: left; color: #e4393c; padding: 5px 0px 2px 0px;">
+								￥${order.extMap.rent } /
+								<c:choose>
+									<c:when test="${order.extMap.rentMode=='daily' }">
+										天
+									</c:when>
+									<c:otherwise>
+										月
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div style="clear: both;"></div>
+							<div style="float: left;">
+								<a class="productLink" onmouseover="productLinkMouseover(this)" onmouseout="productLinkMouseout(this)" href="productDetail/${order.id}">
+									${fn:substring(order.extMap.productName,0,14)}
+								</a>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+					</c:forEach>
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 家用电器 -->
+		<div class="container-fluid" style="margin-top: 20px;">
+			<div class="row">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<span style="display: block; border-left: #0172ba 2px solid; padding-left: 10px; font-size: 18px;">家用电器</span>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<div style="border-bottom: #e0e0e0 2px solid; width: 102%;"></div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 10px 0px; width: 68%;">
+					<c:forEach items="${orderList3}" var="order">
+						<div onmouseover="imouserover(this)" onmouseout="imouserout(this)" style="width: 25%; height: 257px; border: #f5f5f5 1px solid; float: left; text-align: center; padding: 0px 28px; border-radius: 3px;">
+							<a href="productDetail/${order.id}">
+								<img src="/pic/${order.extMap.primaryImg }" style="width: 200px; height: 200px; border: 1px solid rgb(238, 238, 238);">
+							</a>
+							<div style="float: left; color: #e4393c; padding: 5px 0px 2px 0px;">
+								￥${order.extMap.rent } /
+								<c:choose>
+									<c:when test="${order.extMap.rentMode=='daily' }">
+										天
+									</c:when>
+									<c:otherwise>
+										月
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div style="clear: both;"></div>
+							<div style="float: left;">
+								<a class="productLink" onmouseover="productLinkMouseover(this)" onmouseout="productLinkMouseout(this)" href="productDetail/${order.id}">
+									${fn:substring(order.extMap.productName,0,14)}
+								</a>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+					</c:forEach>
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 户外运动 -->
+		<div class="container-fluid" style="margin-top: 20px;">
+			<div class="row">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<span style="display: block; border-left: #0172ba 2px solid; padding-left: 10px; font-size: 18px;">户外运动</span>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<div style="border-bottom: #e0e0e0 2px solid; width: 102%;"></div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 10px 0px; width: 68%;">
+					<c:forEach items="${orderList4}" var="order">
+						<div onmouseover="imouserover(this)" onmouseout="imouserout(this)" style="width: 25%; height: 257px; border: #f5f5f5 1px solid; float: left; text-align: center; padding: 0px 28px; border-radius: 3px;">
+							<a href="productDetail/${order.id}">
+								<img src="/pic/${order.extMap.primaryImg }" style="width: 200px; height: 200px; border: 1px solid rgb(238, 238, 238);">
+							</a>
+							<div style="float: left; color: #e4393c; padding: 5px 0px 2px 0px;">
+								￥${order.extMap.rent } /
+								<c:choose>
+									<c:when test="${order.extMap.rentMode=='daily' }">
+										天
+									</c:when>
+									<c:otherwise>
+										月
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div style="clear: both;"></div>
+							<div style="float: left;">
+								<a class="productLink" onmouseover="productLinkMouseover(this)" onmouseout="productLinkMouseout(this)" href="productDetail/${order.id}">
+									${fn:substring(order.extMap.productName,0,14)}
+								</a>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+					</c:forEach>
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 图书音像 -->
+		<div class="container-fluid" style="margin-top: 20px;">
+			<div class="row">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<span style="display: block; border-left: #0172ba 2px solid; padding-left: 10px; font-size: 18px;">图书音像</span>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<div style="border-bottom: #e0e0e0 2px solid; width: 102%;"></div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 10px 0px; width: 68%;">
+					<c:forEach items="${orderList5}" var="order">
+						<div onmouseover="imouserover(this)" onmouseout="imouserout(this)" style="width: 25%; height: 257px; border: #f5f5f5 1px solid; float: left; text-align: center; padding: 0px 28px; border-radius: 3px;">
+							<a href="productDetail/${order.id}">
+								<img src="/pic/${order.extMap.primaryImg }" style="width: 200px; height: 200px; border: 1px solid rgb(238, 238, 238);">
+							</a>
+							<div style="float: left; color: #e4393c; padding: 5px 0px 2px 0px;">
+								￥${order.extMap.rent } /
+								<c:choose>
+									<c:when test="${order.extMap.rentMode=='daily' }">
+										天
+									</c:when>
+									<c:otherwise>
+										月
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div style="clear: both;"></div>
+							<div style="float: left;">
+								<a class="productLink" onmouseover="productLinkMouseover(this)" onmouseout="productLinkMouseout(this)" href="productDetail/${order.id}">
+									${fn:substring(order.extMap.productName,0,14)}
+								</a>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+					</c:forEach>
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 服装鞋帽 -->
+		<div class="container-fluid" style="margin-top: 20px; margin-bottom: 30px;">
+			<div class="row">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<span style="display: block; border-left: #0172ba 2px solid; padding-left: 10px; font-size: 18px;">服装鞋帽</span>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
+					<div style="border-bottom: #e0e0e0 2px solid; width: 102%;"></div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 5px;">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 10px 0px; width: 68%;">
+					<c:forEach items="${orderList6}" var="order">
+						<div onmouseover="imouserover(this)" onmouseout="imouserout(this)" style="width: 25%; height: 257px; border: #f5f5f5 1px solid; float: left; text-align: center; padding: 0px 28px; border-radius: 3px;">
+							<div onmouseover="imouserover(this)" onmouseout="imouserout(this)" style="width: 25%; height: 257px; border: #f5f5f5 1px solid; float: left; text-align: center; padding: 0px 28px; border-radius: 3px;">
+							<a href="productDetail/${order.id}">
+								<img src="/pic/${order.extMap.primaryImg }" style="width: 200px; height: 200px; border: 1px solid rgb(238, 238, 238);">
+							</a>
+							<div style="float: left; color: #e4393c; padding: 5px 0px 2px 0px;">
+								￥${order.extMap.rent } /
+								<c:choose>
+									<c:when test="${order.extMap.rentMode=='daily' }">
+										天
+									</c:when>
+									<c:otherwise>
+										月
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div style="clear: both;"></div>
+							<div style="float: left;">
+								<a class="productLink" onmouseover="productLinkMouseover(this)" onmouseout="productLinkMouseout(this)" href="productDetail/${order.id}">
+									${fn:substring(order.extMap.productName,0,14)}
+								</a>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+						</div>
+					</c:forEach>
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 分割线 -->
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+					<hr style="height: 12px; border: 0; box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.15);"/>
 				</div>
 			</div>
 		</div>

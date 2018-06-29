@@ -21,4 +21,19 @@ public interface OrderMapper {
 	 */
 	public List<Order> selectOrderByUserIdAndOrderStatus(Map<String, Object> paramsMap);
 
+	/**
+	 * 根据订单id修改订单信息
+	 * @param orderId
+	 * @param string
+	 * @return
+	 */
+	public int updateOrderById(Order order);
+
+	/**
+	 * 根据订单编号查询订单
+	 * @param orderId
+	 * @return
+	 */
+	public Order selectOrderByOrderId(String orderId);
+
 }

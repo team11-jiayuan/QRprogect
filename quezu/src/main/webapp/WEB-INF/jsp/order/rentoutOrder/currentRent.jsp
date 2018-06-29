@@ -14,7 +14,7 @@
 		<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 		<script src="js/jquery-3.3.1.min.js"></script>
 		<script src="js/bootstrap.js"></script>
-		<title>待出租</title>
+		<title>正在租赁</title>
 		<style type="text/css">
 			div.itemheader{
 				border-bottom: rgb(238, 238, 238) 1px solid;
@@ -42,25 +42,12 @@
 				element.style.border="1px solid rgb(230, 230, 230)";
 				element.style.backgroundColor="RGB(255,255,255)";
 			}
-			function cancelOrder(orderId){
-				$.ajax({
-					url: "cancelOrder",
-					data: {orderId: orderId},
-					async: false,
-					type: "POST",
-					success: function(result){
-						if(result.message == "ok"){
-							parent.location.reload();
-						}
-					}
-				});
-			}
 		</script>
 	</head>
 	<body>
 		<div class="container-fluid">
 			<c:if test="${orderList.size()==0 }">
-				<span style="display: block; text-align: center; margin: 40px 0px 20px 0px; font-size: 16px; cursor: default;">没有待出租的订单</span>
+				<span style="display: block; text-align: center; margin: 40px 0px 20px 0px; font-size: 16px; cursor: default;">没有正在出租的订单</span>
 			</c:if>
 			<c:forEach items="${orderList}" var="order">
 				<div class="row" style="border: rgb(230, 230, 230) 1px solid; border-radius: 3px; margin-bottom: 20px;" onmouseover="mouseoverStyle(this)" onmouseout="mouseoutStyle(this)">
@@ -69,15 +56,12 @@
 							<div style="float: left;">
 								<span>发布时间：<fmt:formatDate value="${order.extMap.publishTime }" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 							</div>
-							<div style="float: right;">
-								<a class="link" onclick="cancelOrder('${order.id }')" href="javascript:void(0)"><span style="letter-spacing: 1px;">取消该订单</span></a>
-							</div>
 							<div style="clear: both;"></div>
 						</div>
 						<div class="itemBody">
 							<div style="border-right: 1px solid rgb(238, 238, 238); width: 30%; float: left; padding: 15px 0px 15px 20px;">
 								<div style="float: left;">
-									<img src="/pic/${order.extMap.primaryImg }" style="width: 70px; height: 70px; border: 1px solid rgb(238, 238, 238);">
+									<img src="/pic/${order.extMap.primaryImg }" style="width: 70px; height: 70px; border: 1px solid rgb(238, 238, 238);"></img>
 								</div>
 								<div style="float: left; padding: 0px 15px; width: 67%;">
 									<span>${order.extMap.productName }</span>
@@ -112,25 +96,15 @@
 								</div>
 							</div>
 							<div style="width: 20%; border-right: 1px solid rgb(238, 238, 238); height: 100px; float: left; text-align: center;">
-								<div style="padding: 40px 0px;">修改订单</div>
+								<div style="padding: 40px 0px;">查看订单</div>
 							</div>
 							<div style="width: 25%; height: 100px; float: left; text-align: center;">
 								<c:choose>
-									<c:when test="${order.extMap.renterName==null }">
-										<div style="padding: 40px 0px;">尚无人申请租赁该物品</div>
+									<c:when test="${order.status=='0' }">
+										<div style="padding: 40px 0px;">订单已取消</div>
 									</c:when>
 									<c:otherwise>
-										<div>
-											<fmt:formatDate value="${order.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
-										</div>
-										<div>
-											<span>${order.extMap.renterName }</span>
-											<span>申请租赁该物品</span>
-										</div>
-										<div>
-											<button type="button">同意</button>
-											<button type="button">拒绝</button>
-										</div>
+										
 									</c:otherwise>
 								</c:choose>
 							</div>

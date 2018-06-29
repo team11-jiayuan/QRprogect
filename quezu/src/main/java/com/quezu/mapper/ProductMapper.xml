@@ -31,10 +31,10 @@
 	</insert>
 	
 	<!-- 根据物品ID查找物品 -->
-	<select id="selectProductById" parameterType="Integer" resultMap="BaseResultMap">
+	<select id="selectProductByProductId" parameterType="String" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List" />
 		from tab_product 
-		where p_id = #{id}
+		where p_id = #{productId}
 	</select>
 	
 </mapper>

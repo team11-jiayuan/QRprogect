@@ -22,4 +22,24 @@ public interface OrderService {
 	 */
 	public List<Order> selectOrderByUserIdAndOrderStatus(Map<String, Object> paramsMap);
 
+	/**
+	 * 根据id取消订单
+	 * @param orderId
+	 */
+	public int cancelOrderById(String orderId);
+
+	/**
+	 * 根据订单编号查询订单
+	 * @param orderId
+	 * @return
+	 */
+	public Order selectOrderByOrderId(String orderId);
+
+	/**
+	 * 申请租赁
+	 * @param order
+	 * @return
+	 */
+	public int applyRent(Order order);
+
 }
