@@ -39,7 +39,7 @@
 	<select id="selectUserById" parameterType="Integer" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List" />
 		from tab_user
-		where u_id = #{id}
+		where u_id = #{userId}
 	</select>
 	
 	<!-- 根据ID更新用户 -->

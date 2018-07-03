@@ -19,11 +19,25 @@
 			(#{id}, #{productId}, #{url})
 	</insert>
 	
-	<!-- 根据物品id查询物品图片片 -->
+	<!-- 根据物品id查询物品图片 -->
 	<select id="selectImagesByProductId" parameterType="String" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List" />
 		from tab_image 
 		where p_id = #{productId}
 	</select>
+	
+	<!-- 根据id更新物品图片 -->
+	<update id="updateImageById" parameterType="Image">
+		update tab_image 
+		<set>
+			<if test="productId != null" >
+				p_id = #{productId},
+			</if>
+			<if test="url != null" >
+				i_url = #{url},
+			</if>
+		</set>
+		where i_id = #{id}
+	</update>
 	
 </mapper>

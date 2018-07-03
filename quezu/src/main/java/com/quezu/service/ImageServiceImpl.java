@@ -36,6 +36,15 @@ public class ImageServiceImpl implements ImageService {
 		return imageList;
 	}
 
+	/**
+	 * 根据id更新物品图片
+	 */
+	@Override
+	public int updateImageById(Image image) {
+		int result = imageMapper.updateImageById(image);
+		return result;
+	}
+
 	
 
 }

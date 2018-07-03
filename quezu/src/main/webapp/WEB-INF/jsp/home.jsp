@@ -108,18 +108,6 @@
 				$("#nav_link6").mouseout(function(){
 					$("#nav_link6").removeClass("nav_border");
 				});
-				/**导航栏鼠标点击后样式**/
-				/* $("#link1").click(function(){
-					//移除已访问的超链接样式
-					$(".nav_link.visited").removeClass("visited");
-					//移除已访问的超链接边框样式
-					$(".navigation.visited").removeClass("nav_border");
-					$(".navigation.visited").removeClass("visited");
-					//添加超链接已访问的边框样式
-					$("#nav_link1").addClass("visited");
-					//添加超链接已访问样式
-					$("#link1").addClass("visited");
-				}); */
 			});
 			/**iframe高度自适应**/
 			function changeFrameHeight(){
@@ -136,7 +124,7 @@
 		<div class="container-fluid">
 			<div class="row" style="padding: 20px 0px; border-bottom: #e0e0e0 4px solid;">
 				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="padding: 0px;">
-					<img class="img-responsive" width="180px" src="img/logo.png" >
+					<a href="index"><img class="img-responsive" width="180px" src="img/logo.png" ></a>
 				</div>
 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-8 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0" style="padding-top: 2.2%">
 					<div style="float: left;">
@@ -167,30 +155,6 @@
 								</span>
 							</c:otherwise>
 						</c:choose>
-						<%-- <c:choose>
-							<c:when test="${toPage=='account' }">
-								<span id="nav_link2" class="navigation visited">
-									<a href="myAccount" id="link2" class="nav_link visited">我的账户</a>
-								</span>
-							</c:when>
-							<c:otherwise>
-								<span id="nav_link2" class="navigation">
-									<a href="myAccount" id="link2" class="nav_link">我的账户</a>
-								</span>
-							</c:otherwise>
-						</c:choose> --%>
-						<%-- <c:choose>
-							<c:when test="${toPage=='address' }">
-								<span id="nav_link3" class="navigation visited">
-									<a href="addressManagement" id="link3" class="nav_link visited">地址管理</a>
-								</span>
-							</c:when>
-							<c:otherwise>
-								<span id="nav_link3" class="navigation">
-									<a href="addressManagement" id="link3" class="nav_link">地址管理</a>
-								</span>
-							</c:otherwise>
-						</c:choose> --%>
 					</div>
 					<!-- 分隔线 -->
 					<div class="separator"></div>

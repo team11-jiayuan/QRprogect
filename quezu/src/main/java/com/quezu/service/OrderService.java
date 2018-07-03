@@ -42,4 +42,36 @@ public interface OrderService {
 	 */
 	public int applyRent(Order order);
 
+	/**
+	 * 同意租赁
+	 * @param orderId
+	 */
+	public int agreeRent(String orderId);
+
+	/**
+	 * 拒绝租赁
+	 * @param orderId
+	 */
+	public int disagreeRent(String orderId);
+
+	/**
+	 * 承租人确认被拒绝租赁的消息
+	 * @param orderId
+	 * @return
+	 */
+	public int affirmDisagree(String orderId);
+
+	/**
+	 * 支付订单
+	 * @param orderId
+	 * @return
+	 */
+	public int payForTheOrder(String orderId);
+
+	/**
+	 * 确认收到物品
+	 * @param orderId
+	 */
+	public int receive(String orderId);
+
 }

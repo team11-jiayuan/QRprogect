@@ -6,7 +6,7 @@
 		<result column="p_id" property="productId" jdbcType="VARCHAR" />
 		<result column="u_owner_id" property="ownerId" jdbcType="INTEGER" />
 		<result column="u_renter_id" property="renterId" jdbcType="INTEGER" />
-		<result column="o_status" property="status" jdbcType="VARCHAR" />
+		<result column="o_status" property="status" jdbcType="INTEGER" />
 		<result column="o_days_or_months" property="daysOrMonths" jdbcType="INTEGER" />
 		<result column="o_startTime" property="startTime" jdbcType="DATE" />
 		<result column="o_stopTime" property="stopTime" jdbcType="DATE" />
@@ -20,6 +20,7 @@
 		<result column="p_deposit" property="extMap.deposit" jdbcType="DECIMAL" />
 		<result column="p_rent" property="extMap.rent" jdbcType="DECIMAL" />
 		<result column="p_publish_time" property="extMap.publishTime" jdbcType="TIMESTAMP" />
+		<result column="p_reserved_field" property="extMap.reservedField" jdbcType="VARCHAR" />
 		<result column="u_userName" property="extMap.renterName" jdbcType="VARCHAR" />
 	</resultMap>
 	
@@ -27,7 +28,7 @@
 		o_id, p_id, u_owner_id, u_renter_id, o_status, o_days_or_months, o_startTime, o_stopTime, o_total, o_update_Time
 	</sql>
 	
-	<!-- 插入订单 -->
+	<!-- 插入订单信息 -->
 	<insert id="insertOrder" parameterType="Order">
 		insert into tab_order 
 			(o_id, p_id, u_owner_id, u_renter_id, o_status, o_days_or_months, o_startTime, o_stopTime, o_total, o_update_Time) 
@@ -35,36 +36,39 @@
 			(#{id}, #{productId}, #{ownerId}, #{renterId}, #{status}, #{daysOrMonths}, #{startTime}, #{stopTime}, #{total}, #{updateTime})
 	</insert>
 	
-	<!-- 根据物主id和订单状态查询订单 -->
+	<!-- 根据用户id和订单状态查询订单 -->
 	<select id="selectOrderByUserIdAndOrderStatus" parameterType="map" resultMap="extendedResultMap">
 		SELECT 
 			o.o_id, o.p_id, o.u_owner_id, o.u_renter_id, o.o_status, o.o_days_or_months, o.o_startTime, o.o_stopTime, o.o_total, o.o_update_Time, 
-			p.p_name, p.p_primary_img, p.p_rent_mode, p.p_deposit, p.p_rent, p.p_publish_time, u.u_userName 
+			p.p_name, p.p_primary_img, p.p_rent_mode, p.p_deposit, p.p_rent, p.p_publish_time, p.p_reserved_field, u.u_userName 
 		FROM 
 			tab_order AS o 
 		LEFT JOIN 
-			tab_product AS p ON o.p_id=p.p_id 
+			tab_product AS p ON o.p_id = p.p_id 
 		LEFT JOIN 
-			tab_user AS u ON o.u_renter_id=u.u_id
+			tab_user AS u ON o.u_renter_id = u.u_id
 		<where>
-			<if test="userId != null">
-				o.u_owner_id=#{userId} 
+			<if test="ownerId != null">
+				o.u_owner_id = #{ownerId} 
 			</if>
-			<if test="orderStatus != null">
+			<if test="renterId != null">
+				o.u_renter_id = #{renterId} 
+			</if>
+			<if test="orderStatusList != null">
 				and o.o_status in 
-				<foreach collection="orderStatus" item="sta" separator="," open="(" close=")">
-					#{sta}
+				<foreach collection="orderStatusList" item="status" separator="," open="(" close=")">
+					#{status}
 				</foreach>
 			</if>
-			<if test="productCategory != null">
-				and p.p_category = #{productCategory}
+			<if test="statusMin != null">
+				and o.o_status &gt;= #{statusMin}
+			</if>
+			<if test="statusMax != null">
+				and o.o_status &lt;= #{statusMax}
 			</if>
 		</where>
 		ORDER BY 
-			o_update_Time DESC
-		<if test="limit != null">
-			LIMIT #{limit}
-		</if>
+			o.o_update_Time DESC
 	</select>
 	
 	<!-- 根据订单id修改订单信息 -->

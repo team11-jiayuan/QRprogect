@@ -19,5 +19,11 @@ public interface ImageService {
 	 * @return
 	 */
 	public List<Image> selectImagesByProductId(String productId);
+
+	/**
+	 * 根据id更新物品图片
+	 * @param integer
+	 */
+	public int updateImageById(Image image);
 	
 }

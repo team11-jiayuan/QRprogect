@@ -15,7 +15,7 @@ public interface OrderMapper {
 	public int insertOrder(Order order);
 
 	/**
-	 * 根据物主id和订单状态查询订单
+	 * 根据用户id和订单状态查询订单
 	 * @param paramsMap
 	 * @return
 	 */

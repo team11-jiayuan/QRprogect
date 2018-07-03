@@ -113,19 +113,20 @@ public class UserController {
 	 */
 	@RequestMapping("updateUser")
 	public String updateUser(User user, HttpSession session,  @RequestParam("files") MultipartFile[] files) {
-		//将头像照片存到本地文件系统，并获得图片文件名List
-		List<String> imageList = FileUploadUtil.imageHandler(files);
-		if(imageList.size() != 0) {
-			user.setPhotograph(imageList.get(0));
-		}
-		user.setId(((User)session.getAttribute("currentUser")).getId());
-		Boolean result = userService.updateUserById(user);
-		if(result == true) {
-			User updatedUser = userService.selectUserById(user.getId());
-			session.setAttribute("currentUser", updatedUser);
+		User currentUser = (User)session.getAttribute("currentUser");
+		if(currentUser != null) {
+			//将头像照片存到本地文件系统，并获得图片文件名List
+			List<String> imageList = FileUploadUtil.imageListHandler(files);
+			if(imageList.size() != 0) {
+				user.setPhotograph(imageList.get(0));
+			}
+			user.setId(currentUser.getId());
+			userService.updateUserById(user);
+			user = userService.selectUserById(currentUser.getId());
+			session.setAttribute("currentUser", user);
 			return "management/basicInformation";
 		}else {
-			return "redirect:serverException";
+			return null;
 		}
 	}
 	

@@ -55,7 +55,7 @@
 		<!-- 导航链接 -->
 		<div class="col-xs-8 col-sm-7 col-md-6 col-lg-5 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-2" style="padding-top: 5px;">
 			<c:choose>
-				<c:when test="${sessionScope.currentUser.userName==null }">
+				<c:when test="${sessionScope.currentUser==null }">
 					<a class="link" href="login">请登录</a>
 					<a class="link" href="register">免费注册</a>
 				</c:when>

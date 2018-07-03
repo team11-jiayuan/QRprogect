@@ -21,16 +21,21 @@
 				background-color: #f5f5f5;
 				padding: 5px 20px;
 			}
-			/**导航链接默认样式**/
+			/**链接默认样式**/
 			a.link{
+				text-decoration: none;
+				color: #333;
+			}
+			a.operate{
 				text-decoration: none;
 				color: #999;
 			}
-			/**导航链接鼠标移入时样式**/
+			/**链接鼠标移入时样式**/
 			a.link:hover {
 				color: #0282d3;
 			}
-			div.itemBody{
+			a.operate:hover {
+				color: #0282d3;
 			}
 		</style>
 		<script type="text/javascript">
@@ -42,6 +47,7 @@
 				element.style.border="1px solid rgb(230, 230, 230)";
 				element.style.backgroundColor="RGB(255,255,255)";
 			}
+			/**取消订单**/
 			function cancelOrder(orderId){
 				$.ajax({
 					url: "cancelOrder",
@@ -51,6 +57,44 @@
 					success: function(result){
 						if(result.message == "ok"){
 							parent.location.reload();
+						}else{
+							top.location.href = "login";
+						}
+					}
+				});
+			}
+			/**物品详情**/
+			function productDetail(orderId){
+				top.location.href = "productDetail/"+orderId;
+			}
+			/**同意租赁**/
+			function agreeRent(orderId){
+				$.ajax({
+					url: "agreeRent",
+					data: {orderId: orderId},
+					async: false,
+					type: "POST",
+					success: function(result){
+						if(result.message == "ok"){
+							parent.location.reload();
+						}else{
+							top.location.href = "login";
+						}
+					}
+				});
+			}
+			/**拒绝租赁**/
+			function disagreeRent(orderId){
+				$.ajax({
+					url: "disagreeRent",
+					data: {orderId: orderId},
+					async: false,
+					type: "POST",
+					success: function(result){
+						if(result.message == "ok"){
+							parent.location.reload();
+						}else{
+							top.location.href = "login";
 						}
 					}
 				});
@@ -70,20 +114,26 @@
 								<span>发布时间：<fmt:formatDate value="${order.extMap.publishTime }" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 							</div>
 							<div style="float: right;">
-								<a class="link" onclick="cancelOrder('${order.id }')" href="javascript:void(0)"><span style="letter-spacing: 1px;">取消该订单</span></a>
+								<c:if test="${order.status==1 }">
+									<a class="operate" onclick="cancelOrder('${order.id }')" href="javascript:void(0)"><span style="letter-spacing: 1px;">取消该订单</span></a>
+								</c:if>
 							</div>
 							<div style="clear: both;"></div>
 						</div>
-						<div class="itemBody">
+						<div>
 							<div style="border-right: 1px solid rgb(238, 238, 238); width: 30%; float: left; padding: 15px 0px 15px 20px;">
 								<div style="float: left;">
-									<img src="/pic/${order.extMap.primaryImg }" style="width: 70px; height: 70px; border: 1px solid rgb(238, 238, 238);">
+									<a class="link" href="javascript:void(0)" onclick="productDetail('${order.id}')">
+										<img src="/pic/${order.extMap.primaryImg }" style="width: 70px; height: 70px; border: 1px solid rgb(238, 238, 238);">
+									</a>
 								</div>
 								<div style="float: left; padding: 0px 15px; width: 67%;">
-									<span>${order.extMap.productName }</span>
+									<a class="link" href="javascript:void(0)" onclick="productDetail('${order.id}')">
+										<span>${order.extMap.productName }</span>
+									</a>
 								</div>
 							</div>
-							<div  style="border-right: 1px solid rgb(238, 238, 238); width: 25%; height:100px; float: left; padding: 15px 20px;">
+							<div  style="border-right: 1px solid rgb(238, 238, 238); width: 24%; height:100px; float: left; padding: 15px 20px;">
 								<!-- 租赁方式 -->
 								<div>
 									租赁方式：
@@ -111,27 +161,59 @@
 									</c:choose>
 								</div>
 							</div>
-							<div style="width: 20%; border-right: 1px solid rgb(238, 238, 238); height: 100px; float: left; text-align: center;">
-								<div style="padding: 40px 0px;">修改订单</div>
+							<div style="width: 19%; border-right: 1px solid rgb(238, 238, 238); height: 100px; float: left; text-align: center;">
+								<div style="padding: 40px 0px;">
+									<a class="link" href="javascript:void(0)" onclick="productDetail('${order.id}')">查看物品详情</a>
+								</div>
 							</div>
-							<div style="width: 25%; height: 100px; float: left; text-align: center;">
+							<div style="width: 27%; height: 100px; float: left; text-align: center;">
 								<c:choose>
-									<c:when test="${order.extMap.renterName==null }">
+									<c:when test="${order.status==1 }">
 										<div style="padding: 40px 0px;">尚无人申请租赁该物品</div>
 									</c:when>
-									<c:otherwise>
-										<div>
+									<c:when test="${order.status==2 }">
+										<div style="padding-top: 10px;">
 											<fmt:formatDate value="${order.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
 										</div>
-										<div>
-											<span>${order.extMap.renterName }</span>
+										<div style="padding-top: 3px;">
+											<span style="color: #0282d3;">${order.extMap.renterName }</span>
 											<span>申请租赁该物品</span>
+											<span>${order.daysOrMonths }</span>
+											<c:choose>
+												<c:when test="${order.extMap.rentMode=='daily' }">
+													天
+												</c:when>
+												<c:otherwise>
+													个月
+												</c:otherwise>
+											</c:choose>
 										</div>
-										<div>
-											<button type="button">同意</button>
-											<button type="button">拒绝</button>
+										<div style="padding-top: 5px;">
+											<button onclick="agreeRent('${order.id}')" type="button" class="btn btn-info btn-sm">同意</button>
+											<button onclick="disagreeRent('${order.id}')" type="button" class="btn btn-warning btn-sm">拒绝</button>
 										</div>
-									</c:otherwise>
+									</c:when>
+									<c:when test="${order.status==3 }">
+										<div style="padding-top: 10px;">
+											<fmt:formatDate value="${order.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
+										</div>
+										<div style="padding-top: 3px;">
+											<span>您已同意</span>
+											<span style="color: #0282d3;">${order.extMap.renterName }</span>
+											<span>的租赁申请</span>
+										</div>
+										<div style="padding-top: 5px;">
+											<span>等待对方支付押金和租金</span>
+										</div>
+									</c:when>
+									<c:when test="${order.status==4 }">
+										<div style="padding-top: 25px;">
+											<fmt:formatDate value="${order.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
+										</div>
+										<div style="padding-top: 3px;">
+											<span>对方已支付订单，等待收到物品</span>
+										</div>
+									</c:when>
 								</c:choose>
 							</div>
 							<div style="clear: both;"></div>

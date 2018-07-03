@@ -80,12 +80,12 @@
 				<c:choose>
 					<c:when test="${toPage=='toMyCurrentRent' }">
 						<div style="float:left; margin-right: 40px;">
-							<a id="link1" class="nav visited" href="myCurrentRent"><span id="span1" class="nav visited">正在出租</span></a>
+							<a id="link1" class="nav visited" href="myCurrentRent"><span id="span1" class="nav visited">正在租赁</span></a>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div style="float:left; margin-right: 40px;">
-							<a id="link1" class="nav" href="myCurrentRent"><span id="span1" class="nav">正在出租</span></a>
+							<a id="link1" class="nav" href="myCurrentRent"><span id="span1" class="nav">正在租赁</span></a>
 						</div>
 					</c:otherwise>
 				</c:choose>

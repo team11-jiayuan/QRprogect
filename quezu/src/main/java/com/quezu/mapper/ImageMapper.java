@@ -19,5 +19,12 @@ public interface ImageMapper {
 	 * @return
 	 */
 	public List<Image> selectImagesByProductId(String productId);
+
+	/**
+	 * 根据id更新物品图片
+	 * @param imageId
+	 * @return
+	 */
+	public int updateImageById(Image image);
 	
 }

@@ -37,6 +37,10 @@ public class Product extends BasePojo {
 	private BigDecimal rent;
 	//发布时间
 	private Date publishTime;
+	//最后修改时间
+	private Date updateTime;
+	//预留字段
+	private String reservedField;
 	
 	public String getId() {
 		return id;
@@ -122,4 +126,17 @@ public class Product extends BasePojo {
 	public void setPublishTime(Date publishTime) {
 		this.publishTime = publishTime;
 	}
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+	public String getReservedField() {
+		return reservedField;
+	}
+	public void setReservedField(String reservedField) {
+		this.reservedField = reservedField;
+	}
+	
 }

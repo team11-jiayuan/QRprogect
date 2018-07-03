@@ -12,15 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.quezu.pojo.Order;
+import com.quezu.pojo.Product;
 import com.quezu.pojo.User;
-import com.quezu.service.OrderService;
+import com.quezu.service.ProductService;
 
 @Controller
 public class PageController {
 	
 	@Autowired
-	private OrderService orderService;
+	private ProductService productService;
 	
 	/**
 	 * 首页
@@ -29,22 +29,17 @@ public class PageController {
 	@RequestMapping(value = { "/", "index" })
 	public String showIndex(ModelMap model) {
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
-		List<String> orderStatus = new ArrayList<String>();
-		orderStatus.add("1");
-		orderStatus.add("2");
-		orderStatus.add("3");
-		orderStatus.add("4");
-		orderStatus.add("5");
-		orderStatus.add("6");
-		orderStatus.add("7");
-		orderStatus.add("8");
-		orderStatus.add("9");
-		paramsMap.put("orderStatus", orderStatus);
+		//订单状态
+		List<Integer> orderStatusList = new ArrayList<Integer>();
+		orderStatusList.add(1);
+		paramsMap.put("orderStatusList", orderStatusList);
+		//查询数量
 		paramsMap.put("limit", 4);
-		for(int i=1; i<7; i++) {
-			paramsMap.put("productCategory", ""+i);
-			List<Order> orderList = orderService.selectOrderByUserIdAndOrderStatus(paramsMap);
-			model.addAttribute("orderList"+i, orderList);
+		for(int i=1; i<=6; i++) {
+			//物品分类
+			paramsMap.put("category", ""+i);
+			List<Product> productList = productService.selectProductByParamsMap(paramsMap);
+			model.addAttribute("productList"+i, productList);
 		}
 		return "index";
 	}

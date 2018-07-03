@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService {
 	 * 根据ID查找用户
 	 */
 	@Override
-	public User selectUserById(Integer id) {
-		User user = userMapper.selectUserById(id);
+	public User selectUserById(Integer userId) {
+		User user = userMapper.selectUserById(userId);
 		return user;
 	}
 

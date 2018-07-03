@@ -16,18 +16,23 @@
 		<result column="p_deposit" property="deposit" jdbcType="DECIMAL" />
 		<result column="p_rent" property="rent" jdbcType="DECIMAL" />
 		<result column="p_publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+		<result column="p_update_Time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="p_reserved_field" property="reservedField" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="extendedResultMap" extends="BaseResultMap" type="Product" >
+		<result column="o_id" property="extMap.orderId" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<sql id="Base_Column_List" >
-		p_id, u_id, p_name, p_description, p_primary_img, p_category, p_sub_category, p_provinceID, p_cityID, p_districtID, p_rent_mode, p_deposit, p_rent, p_publish_time
+		p_id, u_id, p_name, p_description, p_primary_img, p_category, p_sub_category, p_provinceID, p_cityID, p_districtID, p_rent_mode, p_deposit, p_rent, p_publish_time, p_update_Time, p_reserved_field
 	</sql>
 	
 	<!-- 插入物品信息 -->
 	<insert id="insertProduct" parameterType="Product">
 		insert into tab_product 
-			(p_id, u_id, p_name, p_description, p_primary_img, p_category, p_sub_category, p_provinceID, p_cityID, p_districtID, p_rent_mode, p_deposit, p_rent, p_publish_time) 
+			(p_id, u_id, p_name, p_description, p_primary_img, p_category, p_sub_category, p_provinceID, p_cityID, p_districtID, p_rent_mode, p_deposit, p_rent, p_publish_time, p_update_Time, p_reserved_field) 
 		values 
-			(#{id}, #{userId}, #{productName}, #{description}, #{primaryImg}, #{category}, #{subCategory}, #{provinceID}, #{cityID}, #{districtID}, #{rentMode}, #{deposit}, #{rent}, #{publishTime})
+			(#{id}, #{userId}, #{productName}, #{description}, #{primaryImg}, #{category}, #{subCategory}, #{provinceID}, #{cityID}, #{districtID}, #{rentMode}, #{deposit}, #{rent}, #{publishTime}, #{updateTime}, #{reservedField})
 	</insert>
 	
 	<!-- 根据物品ID查找物品 -->
@@ -36,5 +41,95 @@
 		from tab_product 
 		where p_id = #{productId}
 	</select>
+	
+	<!-- 根据参数查询物品信息 -->
+	<select id="selectProductByParamsMap" parameterType="map" resultMap="extendedResultMap">
+		SELECT 
+			p.p_id, p.u_id, p.p_name, p.p_description, p.p_primary_img, p.p_category, p.p_sub_category, p.p_provinceID, p.p_cityID, p.p_districtID, p.p_rent_mode, p.p_deposit, p.p_rent, p.p_publish_time, p.p_update_Time, p.p_reserved_field, 
+			o.o_id
+		FROM 
+			tab_product AS p 
+		LEFT JOIN
+			tab_order AS o ON p.p_id = o.p_id
+		<where>
+			<!-- 关键字模糊查询 -->
+			<if test="keyWord != null">
+				p.p_name LIKE '%${keyWord}%'
+			</if>
+			<!-- 物品分类 -->
+			<if test="category != null">
+				and p.p_category = #{category} 
+			</if>
+			<!-- 物品子类 -->
+			<if test="subCategory != null">
+				and p.p_sub_category = #{subCategory} 
+			</if>
+			<!-- 订单状态 -->
+			<if test="orderStatusList != null">
+				and o.o_status in 
+				<foreach collection="orderStatusList" item="status" separator="," open="(" close=")">
+					#{status}
+				</foreach>
+			</if>
+		</where>
+		ORDER BY 
+			p.p_update_Time DESC
+		<if test="limit != null">
+			LIMIT #{limit}
+		</if>
+	</select>
+	
+	<!-- 根据id更新物品信息 -->
+	<update id="updateProductById" parameterType="Product">
+		update tab_product 
+		<set>
+			<if test="userId != null" >
+				u_id = #{userId},
+			</if>
+			<if test="productName != null" >
+				p_name = #{productName},
+			</if>
+			<if test="description != null" >
+				p_description = #{description},
+			</if>
+			<if test="primaryImg != null" >
+				p_primary_img = #{primaryImg},
+			</if>
+			<if test="category != null" >
+				p_category = #{category},
+			</if>
+			<if test="subCategory != null" >
+				p_sub_category = #{subCategory},
+			</if>
+			<if test="provinceID != null" >
+				p_provinceID = #{provinceID},
+			</if>
+			<if test="cityID != null" >
+				p_cityID = #{cityID},
+			</if>
+			<if test="districtID != null" >
+				p_districtID = #{districtID},
+			</if>
+			<if test="rentMode != null" >
+				p_rent_mode = #{rentMode},
+			</if>
+			<if test="deposit != null" >
+				p_deposit = #{deposit},
+			</if>
+			<if test="rent != null" >
+				p_rent = #{rent},
+			</if>
+			<if test="publishTime != null" >
+				p_publish_time = #{publishTime},
+			</if>
+			<if test="updateTime != null" >
+				p_update_Time = #{updateTime},
+			</if>
+			<if test="reservedField != null" >
+				p_reserved_field = #{reservedField},
+			</if>
+		</set>
+		where p_id = #{id}
+	</update>
 	
 </mapper>

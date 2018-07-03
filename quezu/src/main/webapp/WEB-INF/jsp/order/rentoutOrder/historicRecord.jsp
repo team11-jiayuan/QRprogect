@@ -24,13 +24,11 @@
 			/**导航链接默认样式**/
 			a.link{
 				text-decoration: none;
-				color: #999;
+				color: #333;
 			}
 			/**导航链接鼠标移入时样式**/
 			a.link:hover {
 				color: #0282d3;
-			}
-			div.itemBody{
 			}
 		</style>
 		<script type="text/javascript">
@@ -41,6 +39,9 @@
 			function mouseoutStyle(element){
 				element.style.border="1px solid rgb(230, 230, 230)";
 				element.style.backgroundColor="RGB(255,255,255)";
+			}
+			function productDetail(orderId){
+				top.location.href = "productDetail/"+orderId;
 			}
 		</script>
 	</head>
@@ -61,10 +62,14 @@
 						<div class="itemBody">
 							<div style="border-right: 1px solid rgb(238, 238, 238); width: 30%; float: left; padding: 15px 0px 15px 20px;">
 								<div style="float: left;">
-									<img src="/pic/${order.extMap.primaryImg }" style="width: 70px; height: 70px; border: 1px solid rgb(238, 238, 238);"></img>
+									<a class="link" href="javascript:void(0)" onclick="productDetail('${order.id}')">
+										<img src="/pic/${order.extMap.primaryImg }" style="width: 70px; height: 70px; border: 1px solid rgb(238, 238, 238);">
+									</a>
 								</div>
 								<div style="float: left; padding: 0px 15px; width: 67%;">
-									<span>${order.extMap.productName }</span>
+									<a class="link" href="javascript:void(0)" onclick="productDetail('${order.id}')">
+										<span>${order.extMap.productName }</span>
+									</a>
 								</div>
 							</div>
 							<div  style="border-right: 1px solid rgb(238, 238, 238); width: 25%; height:100px; float: left; padding: 15px 20px;">
@@ -96,15 +101,18 @@
 								</div>
 							</div>
 							<div style="width: 20%; border-right: 1px solid rgb(238, 238, 238); height: 100px; float: left; text-align: center;">
-								<div style="padding: 40px 0px;">查看订单</div>
+								<div style="padding: 40px 0px;">
+									<a class="link" href="javascript:void(0)" onclick="productDetail('${order.id}')">查看物品详情</a>
+								</div>
 							</div>
 							<div style="width: 25%; height: 100px; float: left; text-align: center;">
+								<div style="padding-top: 25px;"><fmt:formatDate value="${order.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></div>
 								<c:choose>
-									<c:when test="${order.status=='0' }">
-										<div style="padding: 40px 0px;">订单已取消</div>
+									<c:when test="${order.status==0 }">
+										<div style="padding-top: 5px;">订单已取消</div>
 									</c:when>
 									<c:otherwise>
-										
+										<div style="padding-top: 5px;">订单已完成</div>
 									</c:otherwise>
 								</c:choose>
 							</div>

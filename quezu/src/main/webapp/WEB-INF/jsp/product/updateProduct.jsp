@@ -38,13 +38,32 @@
 		</style>
 		<script type="text/javascript">
 			$(document).ready(function(){
+				//物品描述
+				document.getElementById("description").defaultValue = "${product.description }"
 				//加载分类
+				var category = "${product.category }";
 				$.getJSON("js/json/category.js", function(data) {
 					$(data).each(function(i, json){
+						if(category == json.id){
+							$("#category").append("<option value="+json.id+" selected='selected'>"+json.item+"</option>");
+							return true;
+						}
 						$("#category").append("<option value="+json.id+">"+json.item+"</option>");
 					});
 				});
-				//加载子类subCategory
+				//加载子类
+				var subCategory = "${product.subCategory }";
+				$.getJSON("js/json/sub_category_"+category+".js", function(data) {
+					$(data).each(function(i, json){
+						if(subCategory == json.id){
+							$("#subCategory").append("<option value="+json.id+" selected='selected'>"+json.item+"</option>");
+							return true;
+						}
+						$("#subCategory").append("<option value="+json.id+">"+json.item+"</option>");
+					});
+				});
+				
+				//分类值改变时加载子类subCategory
 				$("#category").change(function(){
 					var categoryid = $("#category").val();
 					$("#subCategory").empty();
@@ -56,9 +75,9 @@
 					});
 				});
 				//读取省、市、区ID
-				var provinceID = '<%=(String)((User)session.getAttribute("currentUser")).getProvinceID() %>';
-				var cityID = '<%=(String)((User)session.getAttribute("currentUser")).getCityID() %>';
-				var districtID = '<%=(String)((User)session.getAttribute("currentUser")).getDistrictID() %>';
+				var provinceID = "${product.provinceID }";
+				var cityID = "${product.cityID }";
+				var districtID = "${product.districtID }";
 				//加载省
 				$.getJSON("js/json/s_province.js", function(data){
 					$(data).each(function(i, json){
@@ -70,7 +89,7 @@
 					});
 				});
 				//如果省ID不为空，加载市
-				if(provinceID != "null" && provinceID != ""){
+				if(cityID != "null" && cityID != ""){
 					$.getJSON("js/json/city_"+provinceID+".js", function(data){
 						$(data).each(function(i, json){
 							if(cityID == json.CityID){
@@ -82,7 +101,7 @@
 					});
 				}
 				//如果市ID不为空，加载区
-				if(cityID != "null" && cityID != ""){
+				if(districtID != "null" && districtID != ""){
 					$.getJSON("js/json/district_"+cityID+".js", function(data){
 						$(data).each(function(i, json){
 							if(districtID == json.DistrictID){
@@ -118,6 +137,16 @@
 					});
 				});
 				//选择租赁方式
+				var rentMode = "${product.rentMode }";
+				if(rentMode == "daily"){
+					$("#rentMode").append("<option value='daily' selected='selected'>日租</option>");
+					$("#rentMode").append("<option value='monthly'>月租</option>");
+					$("#monthly").hide();
+				}else{
+					$("#rentMode").append("<option value='monthly' selected='selected'>月租</option>");
+					$("#rentMode").append("<option value='daily'>日租</option>");
+					$("#daily").hide();
+				}
 				$("#rentMode").change(function(){
 					var rentMode = $("#rentMode").val();
 					if(rentMode == "daily"){
@@ -128,6 +157,9 @@
 						$("#monthly").show();
 					}
 				});
+				//图片上传按钮
+				var imgIndex = ${imageList.size()};
+				add_image(imgIndex);
 			});
 			//点击上传图片按钮
 			function image_click(index) {
@@ -141,6 +173,7 @@
 			}
 			function add_image(index) {
 				$("#upload"+(index+1)).show();
+				document.getElementById("file_"+(index+1)).disabled=false;
 			}
 		</script>
 	</head>
@@ -148,20 +181,22 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4" style="padding: 15px; text-align: center">
-					<span style="font-size: 22px; cursor: default;">发布闲置物品</span>
+					<span style="font-size: 22px; cursor: default;">修改物品信息</span>
 				</div>
 			</div>
 			<div class="row" style="height: 15px; background-color: RGB(245,245,245)"></div>
 			<div class="row" style="padding: 30px 30px;">
 				<!-- 表单区域 -->
-				<form action="publishProduct" method="post" enctype="multipart/form-data">
+				<form action="updateProduct" method="post" enctype="multipart/form-data">
 					<div style="width: 50%; float: left;">
 						<div class="myRow">
+							<!-- 隐藏的物品id -->
+							<input type="text" name="id" value="${product.id }" style="display: none;"/>
 							<div style="width: 25%; float: left;">
 								<span class="baseLabel">物品名称：</span>
 							</div>
 							<div style="width: 75%; float: left;">
-								<input type="text" class="form-control" id="productName" name="productName">
+								<input type="text" class="form-control" id="productName" name="productName" value="${product.productName }">
 							</div>
 							<div class="clearFloat"></div>
 						</div>
@@ -201,7 +236,7 @@
 								<span class="baseLabel">押金：</span>
 							</div>
 							<div style="width: 75%; float: left;">
-								<input type="text" class="form-control" id="deposit" name="deposit">
+								<input type="text" class="form-control" id="deposit" name="deposit" value="${product.deposit }">
 							</div>
 							<div class="clearFloat"></div>
 						</div>
@@ -209,31 +244,37 @@
 					<!-- 上传图片区域 -->
 					<div style="padding-left:36px; width: 50%; height: 310px; float: left; text-align: center;">
 						<span style="font-size: 16px; color: #333; display: block; margin-bottom: 10px; cursor: default;">上传物品图片</span>
-						<div style="border: #ccc 1px solid; width: 362px;">
-							<div id="upload1" style="width: 100px; height: 100px; float: left; margin: 15px 0px 15px 15px;">
+						<div style="border: #ccc 1px solid; width: 362px; padding-bottom: 15px;">
+							<c:forEach items="${imageList}" var="image" varStatus="status">
+								<div id="upload${status.count}" style="width: 100px; height: 100px; float: left; margin: 15px 0px 0px 15px;">
+									<img id="img_${status.count}" onclick="image_click(${status.count})" src="/pic/${image.url }" style="cursor:pointer; width: 100px; height: 100px;">
+									<input id="file_${status.count}" onChange="image_show(${status.count})" type="file" name="files" style="display: none;"/>
+									<input type="text" name="imagesId" value="${image.id }" style="display: none;"/>
+								</div>
+							</c:forEach>
+							<div id="upload1" style="display:none; width: 100px; height: 100px; float: left; margin: 15px 0px 0px 15px;">
 								<img id="img_1" onclick="image_click(1)" src="img/upload.png" style="cursor:pointer; width: 100px; height: 100px;">
-								<input id="file_1" onChange="image_show(1)" type="file" name="files" style="display: none;"/>
+								<input id="file_1" onChange="image_show(1)" type="file" name="files" style="display: none;" disabled="disabled"/>
 							</div>
-							<div id="upload2" style="display:none; width: 100px; height: 100px; float: left; margin: 15px 0px 15px 15px;">
+							<div id="upload2" style="display:none; width: 100px; height: 100px; float: left; margin: 15px 0px 0px 15px;">
 								<img id="img_2" onclick="image_click(2)" src="img/upload.png" style="cursor:pointer; width: 100px; height: 100px;">
-								<input id="file_2" onChange="image_show(2)" type="file" name="files" style="display: none;"/>
+								<input id="file_2" onChange="image_show(2)" type="file" name="files" style="display: none;" disabled="disabled"/>
 							</div>
-							<div id="upload3" style="display:none; width: 100px; height: 100px; float: left; margin: 15px 0px 15px 15px;">
+							<div id="upload3" style="display:none; width: 100px; height: 100px; float: left; margin: 15px 0px 0px 15px;">
 								<img id="img_3" onclick="image_click(3)" src="img/upload.png" style="cursor:pointer; width: 100px; height: 100px;">
-								<input id="file_3" onChange="image_show(3)" type="file" name="files" style="display: none;"/>
+								<input id="file_3" onChange="image_show(3)" type="file" name="files" style="display: none;" disabled="disabled"/>
 							</div>
-							<div class="clearFloat"></div>
-							<div id="upload4" style="display:none; width: 100px; height: 100px; float: left; margin: 0px 0px 15px 15px;">
+							<div id="upload4" style="display:none; width: 100px; height: 100px; float: left; margin: 15px 0px 0px 15px;">
 								<img id="img_4" onclick="image_click(4)" src="img/upload.png" style="cursor:pointer; width: 100px; height: 100px;">
-								<input id="file_4" onChange="image_show(4)" type="file" name="files" style="display: none;"/>
+								<input id="file_4" onChange="image_show(4)" type="file" name="files" style="display: none;" disabled="disabled"/>
 							</div>
-							<div id="upload5" style="display:none; width: 100px; height: 100px; float: left; margin: 0px 0px 15px 15px;">
+							<div id="upload5" style="display:none; width: 100px; height: 100px; float: left; margin: 15px 0px 0px 15px;">
 								<img id="img_5" onclick="image_click(5)" src="img/upload.png" style="cursor:pointer; width: 100px; height: 100px;">
-								<input id="file_5" onChange="image_show(5)" type="file" name="files" style="display: none;"/>
+								<input id="file_5" onChange="image_show(5)" type="file" name="files" style="display: none;" disabled="disabled"/>
 							</div>
-							<div id="upload6" style="display:none; width: 100px; height: 100px; float: left; margin: 0px 0px 15px 15px;">
+							<div id="upload6" style="display:none; width: 100px; height: 100px; float: left; margin: 15px 0px 0px 15px;">
 								<img id="img_6" onclick="image_click(6)" src="img/upload.png" style="cursor:pointer; width: 100px; height: 100px;">
-								<input id="file_6" onChange="image_show(6)" type="file" name="files" style="display: none;"/>
+								<input id="file_6" onChange="image_show(6)" type="file" name="files" style="display: none;" disabled="disabled"/>
 							</div>
 							<div class="clearFloat"></div>
 						</div>
@@ -244,19 +285,16 @@
 							<span class="baseLabel">租赁方式：</span>
 						</div>
 						<div style="width: 37.5%; float: left;">
-							<select id="rentMode" class="form-control" name="rentMode">
-								<option value="daily">日租</option>
-								<option value="monthly">月租</option>
-							</select>
+							<select id="rentMode" class="form-control" name="rentMode"></select>
 						</div>
 						<div id="daily" style="width: 12.5%; float: left;">
 							<span class="baseLabel">日租金：</span>
 						</div>
-						<div id="monthly" style="width: 12.5%; float: left; display: none;">
+						<div id="monthly" style="width: 12.5%; float: left;">
 							<span class="baseLabel">月租金：</span>
 						</div>
 						<div style="width: 37.5%; float: left;">
-							<input type="text" class="form-control" id="rent" name="rent">
+							<input type="text" class="form-control" id="rent" name="rent" value="${product.rent }">
 						</div>
 						<div class="clearFloat"></div>
 					</div>
@@ -282,7 +320,7 @@
 						<div class="clearFloat"></div>
 					</div>
 					<div class="myRow" style="text-align: center; margin-top: 25px;">
-						<input type="submit" class="btn btn-primary" style="width: 35%;" value="立 即 发 布" />
+						<input type="submit" class="btn btn-primary" style="width: 35%;" value="提 交" />
 					</div>
 				</form>
 			</div>

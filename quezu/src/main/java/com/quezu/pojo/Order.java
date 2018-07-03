@@ -17,7 +17,7 @@ public class Order extends BasePojo {
 	//承租人id
 	private Integer renterId;
 	//订单状态
-	private String status;
+	private Integer status;
 	//租用时长(天/月)
 	private Integer daysOrMonths;
 	//起租日期
@@ -53,10 +53,10 @@ public class Order extends BasePojo {
 	public void setRenterId(Integer renterId) {
 		this.renterId = renterId;
 	}
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	

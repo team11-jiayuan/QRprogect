@@ -22,7 +22,7 @@ public interface UserMapper {
 	 * @param id
 	 * @return
 	 */
-	public User selectUserById(Integer id);
+	public User selectUserById(Integer userId);
 	
 	/**
 	 * 根据ID更新用户
