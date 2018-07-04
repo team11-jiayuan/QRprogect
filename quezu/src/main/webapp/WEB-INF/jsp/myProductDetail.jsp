@@ -200,7 +200,7 @@
 									<div style="clear: both;"></div>
 								</div>
 							</c:when>
-							<c:when test="${order.status>=5 && order.status<=9 }">
+							<c:when test="${(order.status>=5 && order.status<=9) || order.status==14 }">
 								<!-- 您正在租用该物品 -->
 								<div style="margin-left: 28%; color: #f00; margin-top: 25px;">
 									<span style="display: block; padding-top: 3px; float: left;">*</span>

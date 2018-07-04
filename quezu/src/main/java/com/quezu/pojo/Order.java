@@ -20,6 +20,8 @@ public class Order extends BasePojo {
 	private Integer status;
 	//租用时长(天/月)
 	private Integer daysOrMonths;
+	//申请延长的天数/月数
+	private Integer extendDate;
 	//起租日期
 	private Date startTime;
 	//结束日期
@@ -59,12 +61,17 @@ public class Order extends BasePojo {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
 	public Integer getDaysOrMonths() {
 		return daysOrMonths;
 	}
 	public void setDaysOrMonths(Integer daysOrMonths) {
 		this.daysOrMonths = daysOrMonths;
+	}
+	public Integer getExtendDate() {
+		return extendDate;
+	}
+	public void setExtendDate(Integer extendDate) {
+		this.extendDate = extendDate;
 	}
 	public Date getStartTime() {
 		return startTime;

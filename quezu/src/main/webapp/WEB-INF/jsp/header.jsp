@@ -65,9 +65,9 @@
 				</c:otherwise>
 			</c:choose>
 			<span style="margin-right: 15px; color: #999;">|</span>
-			<a class="link" href="myHome">个人中心</a>
-			<a class="link" href="myOrder">我的订单</a>
-			<a class="link" href="myFocus">我的关注</a>
+			<a class="link" href="myInformation">个人中心</a>
+			<a class="link" href="myRent">我的租赁</a>
+			<a class="link" href="myRentOut">我的出租</a>
 		</div>
 	</div>
 </div>

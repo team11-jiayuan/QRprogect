@@ -8,6 +8,7 @@
 		<result column="u_renter_id" property="renterId" jdbcType="INTEGER" />
 		<result column="o_status" property="status" jdbcType="INTEGER" />
 		<result column="o_days_or_months" property="daysOrMonths" jdbcType="INTEGER" />
+		<result column="o_extendDate" property="extendDate" jdbcType="INTEGER" />
 		<result column="o_startTime" property="startTime" jdbcType="DATE" />
 		<result column="o_stopTime" property="stopTime" jdbcType="DATE" />
 		<result column="o_total" property="total" jdbcType="DECIMAL" />
@@ -25,21 +26,21 @@
 	</resultMap>
 	
 	<sql id="Base_Column_List" >
-		o_id, p_id, u_owner_id, u_renter_id, o_status, o_days_or_months, o_startTime, o_stopTime, o_total, o_update_Time
+		o_id, p_id, u_owner_id, u_renter_id, o_status, o_days_or_months, o_extendDate, o_startTime, o_stopTime, o_total, o_update_Time
 	</sql>
 	
 	<!-- 插入订单信息 -->
 	<insert id="insertOrder" parameterType="Order">
 		insert into tab_order 
-			(o_id, p_id, u_owner_id, u_renter_id, o_status, o_days_or_months, o_startTime, o_stopTime, o_total, o_update_Time) 
+			(o_id, p_id, u_owner_id, u_renter_id, o_status, o_days_or_months, o_extendDate, o_startTime, o_stopTime, o_total, o_update_Time) 
 		values 
-			(#{id}, #{productId}, #{ownerId}, #{renterId}, #{status}, #{daysOrMonths}, #{startTime}, #{stopTime}, #{total}, #{updateTime})
+			(#{id}, #{productId}, #{ownerId}, #{renterId}, #{status}, #{daysOrMonths}, #{extendDate}, #{startTime}, #{stopTime}, #{total}, #{updateTime})
 	</insert>
 	
 	<!-- 根据用户id和订单状态查询订单 -->
 	<select id="selectOrderByUserIdAndOrderStatus" parameterType="map" resultMap="extendedResultMap">
 		SELECT 
-			o.o_id, o.p_id, o.u_owner_id, o.u_renter_id, o.o_status, o.o_days_or_months, o.o_startTime, o.o_stopTime, o.o_total, o.o_update_Time, 
+			o.o_id, o.p_id, o.u_owner_id, o.u_renter_id, o.o_status, o.o_days_or_months, o.o_extendDate, o.o_startTime, o.o_stopTime, o.o_total, o.o_update_Time, 
 			p.p_name, p.p_primary_img, p.p_rent_mode, p.p_deposit, p.p_rent, p.p_publish_time, p.p_reserved_field, u.u_userName 
 		FROM 
 			tab_order AS o 
@@ -89,6 +90,9 @@
 			</if>
 			<if test="daysOrMonths != null" >
 				o_days_or_months = #{daysOrMonths},
+			</if>
+			<if test="extendDate != null" >
+				o_extendDate = #{extendDate},
 			</if>
 			<if test="startTime != null" >
 				o_startTime = #{startTime},

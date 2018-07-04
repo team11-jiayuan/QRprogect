@@ -144,8 +144,19 @@ public class OrderController {
 			Integer userId = user.getId();
 			Map<String, Object> paramsMap = new HashMap<String, Object>();
 			paramsMap.put("ownerId", userId);
-			paramsMap.put("statusMin", 5);
-			paramsMap.put("statusMax", 9);
+			List<Integer> orderStatusList = new ArrayList<Integer>();
+			orderStatusList.add(5);
+			orderStatusList.add(6);
+			orderStatusList.add(7);
+			orderStatusList.add(8);
+			orderStatusList.add(9);
+			orderStatusList.add(14);
+			orderStatusList.add(15);
+			orderStatusList.add(16);
+			orderStatusList.add(17);
+			orderStatusList.add(18);
+			orderStatusList.add(19);
+			paramsMap.put("orderStatusList", orderStatusList);
 			List<Order> orderList = orderService.selectOrderByUserIdAndOrderStatus(paramsMap);
 			model.addAttribute("orderList", orderList);
 			return "order/rentoutOrder/currentRent";
@@ -205,6 +216,12 @@ public class OrderController {
 			orderStatusList.add(8);
 			orderStatusList.add(9);
 			orderStatusList.add(13);
+			orderStatusList.add(14);
+			orderStatusList.add(15);
+			orderStatusList.add(16);
+			orderStatusList.add(17);
+			orderStatusList.add(18);
+			orderStatusList.add(19);
 			paramsMap.put("orderStatusList", orderStatusList);
 			List<Order> orderList = orderService.selectOrderByUserIdAndOrderStatus(paramsMap);
 			model.addAttribute("orderList", orderList);
@@ -353,7 +370,7 @@ public class OrderController {
 	}
 	
 	/**
-	 * 支付订单
+	 * 确认收到物品
 	 * @param orderId
 	 * @param session
 	 * @return
@@ -372,4 +389,263 @@ public class OrderController {
 		}
 	}
 	
+	/**
+	 * 申请提前归还物品
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("earlyReturn")
+	@ResponseBody
+	public Map<String, String> earlyReturn(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.earlyReturn(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 拒绝提前归还物品
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("disagreeEarlyReturn")
+	@ResponseBody
+	public Map<String, String> disagreeEarlyReturn(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.disagreeEarlyReturn(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+
+	/**
+	 * 承租人确认被拒绝提前归还物品的消息
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("affirmDisagreeEarlyReturn")
+	@ResponseBody
+	public Map<String, String> affirmDisagreeEarlyReturn(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.affirmDisagreeEarlyReturn(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+
+	/**
+	 * 同意提前归还物品
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("agreeEarlyReturn")
+	@ResponseBody
+	public Map<String, String> agreeEarlyReturn(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.agreeEarlyReturn(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 物主确认收到提前归还的物品
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("receiveEarlyReturn")
+	@ResponseBody
+	public Map<String, String> receiveEarlyReturn(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.receiveEarlyReturn(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 承租人确认已归还提前归还的物品
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("affirmEarlyReturn")
+	@ResponseBody
+	public Map<String, String> affirmEarlyReturn(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.affirmEarlyReturn(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 物主返还押金和租金
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("returnDeposit")
+	@ResponseBody
+	public Map<String, String> returnDeposit(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.returnDeposit(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 承租人确认收到押金和租金，订单完成
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("affirmReceiveDeposit")
+	@ResponseBody
+	public Map<String, String> affirmReceiveDeposit(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.affirmReceiveDeposit(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 申请延长租期
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("extendRent")
+	@ResponseBody
+	public Map<String, String> extendRent(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.extendRent(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 确认延长日期
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("affirmExtendDate")
+	@ResponseBody
+	public Map<String, String> affirmExtendDate(String orderId, Integer extendDate, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.affirmExtendDate(orderId, extendDate);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 拒绝延长租期
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("disagreeExtend")
+	@ResponseBody
+	public Map<String, String> disagreeExtend(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.disagreeExtend(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 同意延长租期
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("agreeExtend")
+	@ResponseBody
+	public Map<String, String> agreeExtend(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.agreeExtend(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 支付延长使用租金
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("paymentExtend")
+	@ResponseBody
+	public Map<String, String> paymentExtend(String orderId, HttpSession session){
+		User user = (User)session.getAttribute("currentUser");
+		if(user != null) {
+			orderService.paymentExtend(orderId);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "ok");
+			return map;
+		}else {
+			return null;
+		}
+	}
 }

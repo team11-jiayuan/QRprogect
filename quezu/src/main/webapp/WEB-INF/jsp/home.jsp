@@ -127,9 +127,9 @@
 					<a href="index"><img class="img-responsive" width="180px" src="img/logo.png" ></a>
 				</div>
 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-8 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0" style="padding-top: 2.2%">
-					<div style="float: left;">
+					<!-- <div style="float: left;">
 						<a href="myHome" class="link_01">个人中心首页</a>
-					</div>
+					</div> -->
 					<div style="float: left; margin-left: 5%;">
 						<a href="publish" class="link_01">发布闲置物品</a>
 					</div>
@@ -184,7 +184,7 @@
 								</span>
 							</c:otherwise>
 						</c:choose>
-						<c:choose>
+						<%-- <c:choose>
 							<c:when test="${toPage=='focus' }">
 								<span id="nav_link6" class="navigation visited">
 									<a href="myFocus" id="link6" class="nav_link visited">我的关注</a>
@@ -195,7 +195,7 @@
 									<a href="myFocus" id="link6" class="nav_link">我的关注</a>
 								</span>
 							</c:otherwise>
-						</c:choose>
+						</c:choose> --%>
 					</div>
 				</div>
 				<!-- iframe -->

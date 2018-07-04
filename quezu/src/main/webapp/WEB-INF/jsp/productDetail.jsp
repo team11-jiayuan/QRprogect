@@ -209,6 +209,14 @@
 						</div>
 						<!-- 警告信息 -->
 						<c:choose>
+							<c:when test="${order.status==0 }">
+								<!-- 该物品已取消发布 -->
+								<div style="margin-left: 28%; color: #f00; margin-top: 25px;">
+									<span style="display: block; padding-top: 3px; float: left;">*</span>
+									<span style="display: block; padding-left: 3px; float: left;">该物品已取消发布</span>
+									<div style="clear: both;"></div>
+								</div>
+							</c:when>
 							<c:when test="${order.status>=2 && order.status<=4 }">
 								<!-- 您已申请租赁该物品 -->
 								<div style="margin-left: 28%; color: #f00; margin-top: 25px;">
@@ -217,7 +225,7 @@
 									<div style="clear: both;"></div>
 								</div>
 							</c:when>
-							<c:when test="${order.status>=5 && order.status<=9 }">
+							<c:when test="${(order.status>=5 && order.status<=9) || order.status==14 }">
 								<!-- 您正在租用该物品 -->
 								<div style="margin-left: 28%; color: #f00; margin-top: 25px;">
 									<span style="display: block; padding-top: 3px; float: left;">*</span>

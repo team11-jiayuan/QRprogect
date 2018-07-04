@@ -77,6 +77,12 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int applyRent(Order order) {
 		order.setStatus(2);
+		//设置截至日期
+		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.MONTH, 12);
+		order.setStopTime(calendar.getTime());
 		order.setUpdateTime(new Date());
 		int result = orderMapper.updateOrderById(order);
 		return result;
@@ -171,6 +177,180 @@ public class OrderServiceImpl implements OrderService {
 			order.setStopTime(calendar.getTime());
 		}
 		order.setUpdateTime(date);
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 申请提前归还物品
+	 */
+	@Override
+	public int earlyReturn(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(6);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 拒绝提前归还物品
+	 */
+	@Override
+	public int disagreeEarlyReturn(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(14);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 承租人确认被拒绝提前归还物品的消息
+	 */
+	@Override
+	public int affirmDisagreeEarlyReturn(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(5);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 同意提前归还物品
+	 */
+	@Override
+	public int agreeEarlyReturn(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(7);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 物主确认收到提前归还的物品
+	 */
+	@Override
+	public int receiveEarlyReturn(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(16);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 承租人确认已归还提前归还的物品
+	 */
+	@Override
+	public int affirmEarlyReturn(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(15);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 承租人确认收到押金和租金，订单完成
+	 */
+	@Override
+	public int affirmReceiveDeposit(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(10);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 物主返还押金和租金
+	 */
+	@Override
+	public int returnDeposit(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(17);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 申请延长租期
+	 */
+	@Override
+	public int extendRent(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(18);
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 确认延长日期
+	 */
+	@Override
+	public int affirmExtendDate(String orderId, Integer extendDate) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(8);
+		order.setExtendDate(extendDate);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 拒绝延长租期
+	 */
+	@Override
+	public int disagreeExtend(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(19);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 同意延长租期
+	 */
+	@Override
+	public int agreeExtend(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		order.setStatus(9);
+		order.setUpdateTime(new Date());
+		int result = orderMapper.updateOrderById(order);
+		return result;
+	}
+
+	/**
+	 * 支付延长使用租金
+	 */
+	@Override
+	public int paymentExtend(String orderId) {
+		Order order = orderMapper.selectOrderByOrderId(orderId);
+		Product product = productMapper.selectProductByProductId(order.getProductId());
+		order.setStatus(5);
+		BigDecimal rent = product.getRent().multiply(BigDecimal.valueOf(order.getExtendDate().intValue()));
+		BigDecimal total = rent.add(order.getTotal());
+		order.setTotal(total);
+		Date date = order.getStopTime();
+		if("daily".equals(product.getRentMode())) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.DAY_OF_MONTH, order.getExtendDate());
+			order.setStopTime(calendar.getTime());
+		}else {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.MONTH, order.getExtendDate());
+			order.setStopTime(calendar.getTime());
+		}
+		order.setDaysOrMonths(order.getDaysOrMonths()+order.getExtendDate());
+		order.setExtendDate(0);
+		order.setUpdateTime(new Date());
 		int result = orderMapper.updateOrderById(order);
 		return result;
 	}
